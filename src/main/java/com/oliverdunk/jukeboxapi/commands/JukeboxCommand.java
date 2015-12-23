@@ -1,6 +1,7 @@
 package com.oliverdunk.jukeboxapi.commands;
 
 import com.oliverdunk.jukeboxapi.api.JukeboxAPI;
+import com.oliverdunk.jukeboxapi.api.ResourceType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -26,8 +27,8 @@ public class JukeboxCommand implements CommandExecutor {
                     player.sendMessage(PREFIX + args[1] + " is not currently online.");
                     return true;
                 }
-                if(args[0].equalsIgnoreCase("music")) JukeboxAPI.playSong(playFor, args[2]);
-                else JukeboxAPI.playSoundEffect(playFor, args[2]);
+                if(args[0].equalsIgnoreCase("music")) JukeboxAPI.play(playFor, args[2], ResourceType.MUSIC);
+                else JukeboxAPI.play(playFor, args[2], ResourceType.SOUND_EFFECT);
             }else{
 
             }

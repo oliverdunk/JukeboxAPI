@@ -4,9 +4,11 @@ import com.oliverdunk.jukeboxapi.Jukebox;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -23,7 +25,7 @@ public class RequestHandler {
      * @param parameters Any parameters which will be passed as GET parameters to the API.
      * @return A JSONObject containing the response from the server.
      */
-    protected static JSONObject makeRequest(String method, HashMap<String, String> parameters){
+    protected static APIResponse makeRequest(String method, HashMap<String, String> parameters){
         try {
             //Build URL from method and parameters
             StringBuilder URLString = new StringBuilder(API_URL + method + "?");
@@ -37,12 +39,15 @@ public class RequestHandler {
 
             //Get first line of response and return it as a JSONObject
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            return new JSONObject(reader.readLine());
-        }catch(Exception ex){
-            //Something went wrong - throw the exception and return a failure.
-            Jukebox.getInstance().getLogger().info("An error occurred while making a request to Jukebox's server...");
-            ex.printStackTrace();
-            return new JSONObject().put("status", "FAILURE");
+            return APIResponse.valueOf(new JSONObject(reader.readLine()).getString("status"));
+
+            //Handle possible exceptions
+        }catch(MalformedURLException exception) {
+            Jukebox.getInstance().getLogger().info("The API URL in use is malformed.");
+            return APIResponse.FAILURE;
+        }catch(IOException exception){
+            Jukebox.getInstance().getLogger().info("Unable to connect to the Jukebox API.");
+            return APIResponse.FAILURE;
         }
     }
 
