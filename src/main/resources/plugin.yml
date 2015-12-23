@@ -1,0 +1,7 @@
+name: JukeboxAPI
+version: 1.0
+main: com.oliverdunk.jukeboxapi.Jukebox
+
+commands:
+  jukebox:
+    usage: /jukebox
