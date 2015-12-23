@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class JukeboxAPI {
 
@@ -15,7 +16,7 @@ public class JukeboxAPI {
      * @param type The ResourceType - only one song can be played at a time, but multiple sound effects can play
      */
     public static void play(Player player, String URL, final ResourceType type){
-        final HashMap<String, String> parameters = new HashMap<String, String>();
+        final Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("username", player.getName());
         parameters.put("url", URL);
         Bukkit.getScheduler().runTaskAsynchronously(Jukebox.getInstance(), new Runnable() {

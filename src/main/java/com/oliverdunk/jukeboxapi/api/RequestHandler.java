@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.Map;
 
 public class RequestHandler {
 
@@ -25,7 +25,7 @@ public class RequestHandler {
      * @param parameters Any parameters which will be passed as GET parameters to the API.
      * @return A JSONObject containing the response from the server.
      */
-    protected static APIResponse makeRequest(String method, HashMap<String, String> parameters){
+    protected static APIResponse makeRequest(String method, Map<String, String> parameters){
         try {
             //Build URL from method and parameters
             StringBuilder URLString = new StringBuilder(API_URL + method + "?");
