@@ -35,6 +35,7 @@ public class RequestHandler {
 
             //Attempt a connection
             HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
             InputStream inputStream = connection.getInputStream();
 
             //Get first line of response and return it as a JSONObject
@@ -46,6 +47,7 @@ public class RequestHandler {
             Jukebox.getInstance().getLogger().info("The API URL in use is malformed.");
             return APIResponse.FAILURE;
         }catch(IOException exception){
+            exception.printStackTrace();
             Jukebox.getInstance().getLogger().info("Unable to connect to the Jukebox API.");
             return APIResponse.FAILURE;
         }
