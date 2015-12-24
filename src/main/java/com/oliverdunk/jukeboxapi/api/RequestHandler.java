@@ -29,8 +29,10 @@ public class RequestHandler {
         try {
             //Build URL from method and parameters
             StringBuilder URLString = new StringBuilder(API_URL + method + "?");
-            for (String key : parameters.keySet()) URLString.append(key + "=" + parameters.get(key) + "&");
-            URLString.append("api_key=" + API_Key);
+            for (String key : parameters.keySet()) {
+                URLString.append(key).append("=").append(parameters.get(key)).append("&");
+            }
+            URLString.append("api_key=").append(API_Key);
             URL URL = new URL(URLString.toString());
 
             //Attempt a connection
@@ -40,7 +42,13 @@ public class RequestHandler {
 
             //Get first line of response and return it as a JSONObject
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            return APIResponse.valueOf(new JSONObject(reader.readLine()).getString("status"));
+            String result = new JSONObject(reader.readLine()).getString("status");
+
+            //Close connections
+            reader.close();
+            connection.disconnect();
+
+            return APIResponse.valueOf(result);
 
             //Handle possible exceptions
         }catch(MalformedURLException exception) {
