@@ -1,0 +1,10 @@
+language: java
+jdk:
+- oraclejdk7
+deploy:
+  provider: releases
+  api_key:
+    secure: iIFs54UwjLI1/czzA9bXlTPsXuSbUfwA0RAzajCs808DUYhTSfDIEAiSIVTQfsNeKh8Iw1hfseMHzuT29PLT5tq/t51Is84IkN/VVS5BnEu/MeLnaL/jtZnJZ9UF21Ef7Dqiy2jYGymO3xn4bfSRMzdVQ/CQRY73uTNHrTe/doWI+VutH70yXO0oLEVRxEQSohHje/h0WGlswKFSO/SaQpRJdNCMZZrnnulB7KtpZmw46c/h46GbV/E81J7D1gB1P8RdhBU+5iKuN3yBrEI7PiztsqtIkX9jxRYFvvsI1u5W9KeP0k0aGNXdBjH+QuAuAXbJRtEnNQPMdnPDwqpAaK6DEahb+H4igoHceCiHubKrDDoVwWuuxA1awqFjG8o7u/G+MtMFWmSPFPQXpY61VxxFCABDccB0JC6G4oYl7Ywj+ZPOyAVMCjiNeq9JtcpwA3C1Mdfuaf9CVZzRfyDosJPU8qxifhVnHjHqZri4F6TIsLNnR2fKVABuTVDVux5qbf6t6USYdPx2uqJOJWZIJaJ15Kx0dfvpMekvtU3KLzF4hjBWByudk2/Ls+Yt+SVUlhvp+EQZhM3W46IUOTTYR4xiQF5Pnrwl9kUtUiIYUuGtpq1S4gmRDYKpuTtF+1BKf5EciNl9EkfVOA22MXgOCNZOmL6ES/3SZ2QcWoxrBds=
+  file: JukeboxAPI.jar
+  on:
+    repo: oliverdunk/JukeboxAPITravis support
