@@ -1,5 +1,7 @@
 package com.oliverdunk.jukeboxapi.commands;
 
+import com.oliverdunk.jukeboxapi.Jukebox;
+import com.oliverdunk.jukeboxapi.api.APIResponse;
 import com.oliverdunk.jukeboxapi.api.JukeboxAPI;
 import com.oliverdunk.jukeboxapi.api.ResourceType;
 import org.bukkit.Bukkit;
@@ -30,10 +32,10 @@ public class JukeboxCommand implements CommandExecutor {
                 if(args[0].equalsIgnoreCase("music")) JukeboxAPI.play(playFor, args[2], ResourceType.MUSIC);
                 else JukeboxAPI.play(playFor, args[2], ResourceType.SOUND_EFFECT);
             }else{
-
+                player.sendMessage(PREFIX + "Usage: /jukeboxapi <music/sound> <player> <url>");
             }
         }else{
-            player.sendMessage(PREFIX + "Usage: /jukeboxapi <music/sound> <player> <url>");
+            player.sendMessage(PREFIX + "https://www.oliverdunk.com/jukebox/?username=" + player.getName() + "&server=" + Jukebox.id);
         }
         return true;
     }
