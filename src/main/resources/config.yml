@@ -1,5 +1,2 @@
-##Your API key (get it from https://www.oliverdunk.com/jukebox/register)
 api_key: exampleKey
-
-##Your Server ID
 server_id: 1

@@ -6,7 +6,7 @@
 
     <groupId>me.oliverdunk</groupId>
     <artifactId>JukeboxAPI</artifactId>
-    <version>1.4-RELEASE</version>
+    <version>1.5-RELEASE</version>
 
     <repositories>
         <repository>

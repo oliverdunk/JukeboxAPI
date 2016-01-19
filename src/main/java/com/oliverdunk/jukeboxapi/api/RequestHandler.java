@@ -15,7 +15,7 @@ import java.util.Map;
 public class RequestHandler {
 
     //The URL which requests should be made to
-    private static final String API_URL = "https://oliverdunk.com/jukebox/api/v1/";
+    private static final String API_URL = "https://mcjukebox.net/api/v1/";
     //The API key which should be used to authenticate requests
     private static String API_Key;
 

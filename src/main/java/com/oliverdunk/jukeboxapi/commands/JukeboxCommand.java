@@ -35,7 +35,7 @@ public class JukeboxCommand implements CommandExecutor {
                 player.sendMessage(PREFIX + "Usage: /jukeboxapi <music/sound> <player> <url>");
             }
         }else{
-            player.sendMessage(PREFIX + "https://www.oliverdunk.com/jukebox/?username=" + player.getName() + "&server=" + Jukebox.id);
+            player.sendMessage(PREFIX + "https://www.mcjukebox.net/?username=" + player.getName() + "&server=" + Jukebox.id);
         }
         return true;
     }
