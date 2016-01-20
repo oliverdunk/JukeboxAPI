@@ -1,9 +1,8 @@
 package com.oliverdunk.jukeboxapi.commands;
 
 import com.oliverdunk.jukeboxapi.Jukebox;
-import com.oliverdunk.jukeboxapi.api.APIResponse;
 import com.oliverdunk.jukeboxapi.api.JukeboxAPI;
-import com.oliverdunk.jukeboxapi.api.ResourceType;
+import com.oliverdunk.jukeboxapi.api.models.ResourceType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -19,7 +18,7 @@ public class JukeboxCommand implements CommandExecutor {
         if(!(commandSender instanceof Player)) return false;
         Player player = (Player) commandSender;
         if(!player.hasPermission("jukeboxapi.admin")){
-            player.sendMessage(PREFIX + "You need the 'jukebox.admin' permission to do this.");
+            player.sendMessage(PREFIX + "https://www.mcjukebox.net/?username=" + player.getName() + "&server=" + Jukebox.getInstance().getId());
             return true;
         }
         if(args.length == 3){
@@ -34,8 +33,10 @@ public class JukeboxCommand implements CommandExecutor {
             }else{
                 player.sendMessage(PREFIX + "Usage: /jukeboxapi <music/sound> <player> <url>");
             }
+        }else if(args.length == 0){
+            player.sendMessage(PREFIX + "https://www.mcjukebox.net/?username=" + player.getName() + "&server=" + Jukebox.getInstance().getId());
         }else{
-            player.sendMessage(PREFIX + "https://www.mcjukebox.net/?username=" + player.getName() + "&server=" + Jukebox.id);
+            player.sendMessage(PREFIX + "Usage: /jukeboxapi <music/sound> <player> <url>");
         }
         return true;
     }

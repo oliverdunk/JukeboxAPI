@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.oliverdunk</groupId>
+    <groupId>com.oliverdunk</groupId>
     <artifactId>JukeboxAPI</artifactId>
-    <version>1.5-RELEASE</version>
+    <version>1.6-RELEASE</version>
 
     <repositories>
         <repository>
@@ -26,6 +26,12 @@
             <artifactId>json</artifactId>
             <version>20140107</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.6</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -37,6 +43,24 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-maven-plugin</artifactId>
+                <version>1.16.6.1</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>delombok</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDirectory>/src</sourceDirectory>
+                    <addOutputDirectory>true</addOutputDirectory>
+                    <encoding>lombok.encoding</encoding>
                 </configuration>
             </plugin>
             <plugin>

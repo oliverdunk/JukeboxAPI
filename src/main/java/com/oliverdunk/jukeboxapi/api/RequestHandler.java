@@ -17,7 +17,11 @@ public class RequestHandler {
     //The URL which requests should be made to
     private static final String API_URL = "https://mcjukebox.net/api/v1/";
     //The API key which should be used to authenticate requests
-    private static String API_Key;
+    private String APIKey;
+
+    public RequestHandler(String APIKey){
+        this.APIKey = APIKey;
+    }
 
     /**
      * Make a request to the Jukebox API.
@@ -25,14 +29,14 @@ public class RequestHandler {
      * @param parameters Any parameters which will be passed as GET parameters to the API.
      * @return A JSONObject containing the response from the server.
      */
-    protected static APIResponse makeRequest(String method, Map<String, String> parameters){
+    protected APIResponse makeRequest(String method, Map<String, String> parameters){
         try {
             //Build URL from method and parameters
             StringBuilder URLString = new StringBuilder(API_URL + method + "?");
             for (String key : parameters.keySet()) {
                 URLString.append(key).append("=").append(parameters.get(key)).append("&");
             }
-            URLString.append("api_key=").append(API_Key);
+            URLString.append("api_key=").append(APIKey);
             URL URL = new URL(URLString.toString());
 
             //Attempt a connection
@@ -63,9 +67,10 @@ public class RequestHandler {
 
     /**
      * Sets the API key which should be used for authenticating API calls.
-     * @param API_Key An API key collected from https://www.oliverdunk.com/jukebox/
+     * @param APIKey An API key collected from https://www.oliverdunk.com/jukebox/
      */
-    public static void setAPI_Key(String API_Key) {
-        RequestHandler.API_Key = API_Key;
+    public void setAPIKey(String APIKey) {
+        this.APIKey = APIKey;
     }
+
 }
