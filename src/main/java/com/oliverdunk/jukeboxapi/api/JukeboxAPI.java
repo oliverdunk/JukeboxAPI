@@ -2,7 +2,6 @@ package com.oliverdunk.jukeboxapi.api;
 
 import com.oliverdunk.jukeboxapi.Jukebox;
 import com.oliverdunk.jukeboxapi.api.models.Media;
-import com.oliverdunk.jukeboxapi.api.models.ResourceType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

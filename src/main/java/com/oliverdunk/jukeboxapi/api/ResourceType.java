@@ -1,4 +1,4 @@
-package com.oliverdunk.jukeboxapi.api.models;
+package com.oliverdunk.jukeboxapi.api;
 
 public enum ResourceType {
     SOUND_EFFECT,

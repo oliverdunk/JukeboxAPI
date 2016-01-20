@@ -1,7 +1,6 @@
 package com.oliverdunk.jukeboxapi.api.models;
 
-import lombok.Builder;
-import lombok.Data;
+import com.oliverdunk.jukeboxapi.api.ResourceType;
 import lombok.Getter;
 import lombok.Setter;
 

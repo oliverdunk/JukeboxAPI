@@ -2,7 +2,7 @@ package com.oliverdunk.jukeboxapi.commands;
 
 import com.oliverdunk.jukeboxapi.Jukebox;
 import com.oliverdunk.jukeboxapi.api.JukeboxAPI;
-import com.oliverdunk.jukeboxapi.api.models.ResourceType;
+import com.oliverdunk.jukeboxapi.api.ResourceType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
