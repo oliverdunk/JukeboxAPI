@@ -67,7 +67,7 @@ public class JukeboxCommand implements CommandExecutor {
 
     private boolean URL(CommandSender sender){
         if(sender instanceof Player) {
-            String URL = "https://mcjukebox.net/?username=" + sender.getName() + "&server=" + Jukebox.getInstance().getId();
+            String URL = "https://mcjukebox.net/client?username=" + sender.getName() + "&server=" + Jukebox.getInstance().getId();
             TextComponent message = new TextComponent("Click here to launch our custom music client.");
             message.setColor(net.md_5.bungee.api.ChatColor.GOLD);
             message.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, URL));
