@@ -5,7 +5,6 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
-import java.util.Optional;
 
 public class MessageUtils {
 
@@ -18,7 +17,7 @@ public class MessageUtils {
 	 * @param key Key which should be used to lookup the message
 	 */
 	public static void sendMessage(CommandSender player, String key){
-		sendMessage(player, key, Optional.<HashMap<String,String>>empty());
+		sendMessage(player, key, null);
 	}
 
 	/**
@@ -28,14 +27,13 @@ public class MessageUtils {
 	 * @param key Key which should be used to lookup the message
 	 * @param findAndReplace Optional list of keys which should be replaced with the corresponding values
 	 */
-	public static void sendMessage(CommandSender player, String key, Optional<HashMap<String, String>> findAndReplace){
+	public static void sendMessage(CommandSender player, String key, HashMap<String, String> findAndReplace){
 		String message = langUtils.get(key);
 
 		//Replace any values in the find and replace HashMap, if it is present
 		message = ChatColor.translateAlternateColorCodes('&', message);
-		if (findAndReplace.isPresent()) {
-			HashMap<String, String> findReplace = findAndReplace.get();
-			for (String find : findReplace.keySet()) message = message.replace("[" + find + "]", findReplace.get(find));
+		if (findAndReplace != null) {
+			for (String find : findAndReplace.keySet()) message = message.replace("[" + find + "]", findAndReplace.get(find));
 		}
 
 		player.sendMessage(message);

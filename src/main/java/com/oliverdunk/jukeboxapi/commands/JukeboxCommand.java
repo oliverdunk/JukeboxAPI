@@ -18,7 +18,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Optional;
 
 @AllArgsConstructor
 public class JukeboxCommand implements CommandExecutor {
@@ -93,7 +92,7 @@ public class JukeboxCommand implements CommandExecutor {
         if(playFor == null){
             HashMap<String, String> findAndReplace = new HashMap<String, String>();
             findAndReplace.put("user", args[1]);
-            MessageUtils.sendMessage(sender, "command.notOnline", Optional.of(findAndReplace));
+            MessageUtils.sendMessage(sender, "command.notOnline", findAndReplace);
             return true;
         }
         if(args[0].equalsIgnoreCase("music")) JukeboxAPI.play(playFor, args[2], ResourceType.MUSIC);
@@ -106,7 +105,7 @@ public class JukeboxCommand implements CommandExecutor {
         if(playFor == null){
             HashMap<String, String> findAndReplace = new HashMap<String, String>();
             findAndReplace.put("user", args[1]);
-            MessageUtils.sendMessage(sender, "command.notOnline", Optional.of(findAndReplace));
+            MessageUtils.sendMessage(sender, "command.notOnline", findAndReplace);
             return true;
         }
         JukeboxAPI.stopMusic(playFor);
