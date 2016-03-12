@@ -32,6 +32,18 @@ public class DataUtils {
         }
     }
 
+    public static String getStringFromPath(String pathToLoadFrom){
+        try{
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToLoadFrom)));
+            StringBuilder object = new StringBuilder();
+            while(reader.ready()) object.append(reader.readLine());
+            return object.toString();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * Loads an object saved using the saveObjectToPath method. Returns an object which can be
      * casted, after checking to the expected Type.

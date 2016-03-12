@@ -1,5 +1,5 @@
 name: JukeboxAPI
-version: 1.7.1
+version: 1.8
 main: com.oliverdunk.jukeboxapi.Jukebox
 softdepend: [WorldGuard]
 

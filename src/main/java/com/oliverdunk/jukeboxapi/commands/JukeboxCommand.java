@@ -3,6 +3,9 @@ package com.oliverdunk.jukeboxapi.commands;
 import com.oliverdunk.jukeboxapi.Jukebox;
 import com.oliverdunk.jukeboxapi.api.JukeboxAPI;
 import com.oliverdunk.jukeboxapi.api.ResourceType;
+import com.oliverdunk.jukeboxapi.utils.LangUtils;
+import com.oliverdunk.jukeboxapi.utils.MessageUtils;
+import lombok.AllArgsConstructor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -14,7 +17,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Optional;
+
+@AllArgsConstructor
 public class JukeboxCommand implements CommandExecutor {
+
+    private LangUtils langUtils;
 
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         //If the user does not have permission to operate Jukebox, simply send them the URL
@@ -25,16 +34,16 @@ public class JukeboxCommand implements CommandExecutor {
             //Region add command
             if(args.length == 4 && args[1].equalsIgnoreCase("add")){
                 Jukebox.getInstance().getRegionUtils().addRegion(args[2], args[3]);
-                commandSender.sendMessage(ChatColor.GREEN + "Region registered!");
+                MessageUtils.sendMessage(commandSender, "region.registered");
                 return true;
             }
             //Region remove command
             if(args.length == 3 && args[1].equalsIgnoreCase("remove")){
                 if(Jukebox.getInstance().getRegionUtils().hasRegion(args[2])){
                     Jukebox.getInstance().getRegionUtils().removeRegion(args[2]);
-                    commandSender.sendMessage(ChatColor.GREEN + "Region unregistered.");
+                    MessageUtils.sendMessage(commandSender, "region.unregistered");
                 }else{
-                    commandSender.sendMessage(ChatColor.RED + "That region is not registered.");
+                    MessageUtils.sendMessage(commandSender, "region.notregistered");
                 }
                 return true;
             }
@@ -67,11 +76,11 @@ public class JukeboxCommand implements CommandExecutor {
 
     private boolean URL(CommandSender sender){
         if(sender instanceof Player) {
-            String URL = "https://mcjukebox.net/client?username=" + sender.getName() + "&server=" + Jukebox.getInstance().getId();
-            TextComponent message = new TextComponent("Click here to launch our custom music client.");
+            String URL = langUtils.get("user.openDomain") + "?username=" + sender.getName() + "&server=" + Jukebox.getInstance().getId();
+            TextComponent message = new TextComponent(langUtils.get("user.openClient"));
             message.setColor(net.md_5.bungee.api.ChatColor.GOLD);
             message.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, URL));
-            message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Launch client").create()));
+            message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(langUtils.get("user.openHover")).create()));
             ((Player) sender).spigot().sendMessage(message);
         }else {
             help(sender);
@@ -82,7 +91,9 @@ public class JukeboxCommand implements CommandExecutor {
     private boolean play(CommandSender sender, String[] args){
         Player playFor = Bukkit.getPlayer(args[1]);
         if(playFor == null){
-            sender.sendMessage(ChatColor.RED + args[1] + " is not currently online.");
+            HashMap<String, String> findAndReplace = new HashMap<String, String>();
+            findAndReplace.put("user", args[1]);
+            MessageUtils.sendMessage(sender, "command.notOnline", Optional.of(findAndReplace));
             return true;
         }
         if(args[0].equalsIgnoreCase("music")) JukeboxAPI.play(playFor, args[2], ResourceType.MUSIC);
@@ -93,7 +104,9 @@ public class JukeboxCommand implements CommandExecutor {
     private boolean stop(CommandSender sender, String[] args){
         Player playFor = Bukkit.getPlayer(args[1]);
         if(playFor == null){
-            sender.sendMessage(ChatColor.RED + args[1] + " is not currently online.");
+            HashMap<String, String> findAndReplace = new HashMap<String, String>();
+            findAndReplace.put("user", args[1]);
+            MessageUtils.sendMessage(sender, "command.notOnline", Optional.of(findAndReplace));
             return true;
         }
         JukeboxAPI.stopMusic(playFor);
