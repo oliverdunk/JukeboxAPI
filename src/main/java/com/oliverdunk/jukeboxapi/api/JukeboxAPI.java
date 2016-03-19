@@ -43,6 +43,7 @@ public class JukeboxAPI {
         parameters.put("url", media.getURL());
         parameters.put("pan", media.getPan() + "");
         parameters.put("volume", media.getVolume() + "");
+        parameters.put("looping", media.isLooping() + "");
         Bukkit.getScheduler().runTaskAsynchronously(Jukebox.getInstance(), new Runnable() {
             public void run() {
                 if(media.getType() == ResourceType.MUSIC) Jukebox.getInstance().getRequestHandler().makeRequest("music", parameters);

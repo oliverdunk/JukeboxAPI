@@ -70,6 +70,7 @@ public class JukeboxCommand implements CommandExecutor {
         sender.sendMessage("/jukebox sound <username> <url>");
         sender.sendMessage("/jukebox region add <id> <url>");
         sender.sendMessage("/jukebox region remove <id>");
+        sender.sendMessage("/jukebox stop <username>");
         return true;
     }
 

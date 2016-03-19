@@ -51,6 +51,10 @@ public class RegionListener implements Listener{
         if(playing.containsKey(e.getPlayer().getUniqueId().toString()) &&
                 playing.get(e.getPlayer().getUniqueId().toString()).equals(highestRegion.getId())) return;
 
+        if(playing.containsKey(e.getPlayer().getUniqueId().toString()) &&
+                utils.getURL(playing.get(e.getPlayer().getUniqueId().toString())).equals(
+                utils.getURL(highestRegion.getId()))) return;
+
         playing.put(e.getPlayer().getUniqueId().toString(), highestRegion.getId());
 
         Media media = new Media(ResourceType.MUSIC, utils.getURL(highestRegion.getId()));

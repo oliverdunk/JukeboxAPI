@@ -14,6 +14,8 @@ public class Media {
     @Getter @Setter private int volume = 100;
     //Pan left to right, -100 to 100
     @Getter @Setter private int pan = 0;
+    //If the music track should loop once complete (not applicable for sounds)
+    @Getter @Setter private boolean looping;
 
     public Media(ResourceType type, String URL){
         setType(type);
