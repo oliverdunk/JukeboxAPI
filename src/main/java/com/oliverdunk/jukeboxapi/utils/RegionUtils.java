@@ -22,7 +22,7 @@ public class RegionUtils implements Listener {
     }
 
     public void addRegion(String ID, String URL){
-        regions.put(ID, URL);
+        regions.put(ID.toLowerCase(), URL);
     }
 
     public void removeRegion(String ID){

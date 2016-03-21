@@ -6,7 +6,7 @@
 
     <groupId>com.oliverdunk</groupId>
     <artifactId>JukeboxAPI</artifactId>
-    <version>1.9-RELEASE</version>
+    <version>1.10-RELEASE</version>
 
     <repositories>
         <repository>

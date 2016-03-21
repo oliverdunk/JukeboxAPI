@@ -10,6 +10,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
 
@@ -59,6 +60,13 @@ public class RegionListener implements Listener{
 
         Media media = new Media(ResourceType.MUSIC, utils.getURL(highestRegion.getId()));
         JukeboxAPI.play(e.getPlayer(), media);
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent event){
+        if(!playing.containsKey(event.getPlayer().getUniqueId().toString())) return;
+        JukeboxAPI.stopMusic(event.getPlayer());
+        playing.remove(event.getPlayer().getUniqueId().toString());
     }
 
 }
