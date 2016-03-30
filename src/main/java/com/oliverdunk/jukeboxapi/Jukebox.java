@@ -48,7 +48,6 @@ public class Jukebox extends JavaPlugin {
      */
     public void onDisable(){
         regionUtils.save();
-        langUtils.save();
     }
 
 }

@@ -27,6 +27,7 @@ public class LangUtils {
 			}
 			if(config == null) config = new JSONObject();
 			addDefaults();
+			save();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

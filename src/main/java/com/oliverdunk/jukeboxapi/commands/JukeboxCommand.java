@@ -5,11 +5,8 @@ import com.oliverdunk.jukeboxapi.api.JukeboxAPI;
 import com.oliverdunk.jukeboxapi.api.ResourceType;
 import com.oliverdunk.jukeboxapi.utils.LangUtils;
 import com.oliverdunk.jukeboxapi.utils.MessageUtils;
+import com.oliverdunk.jukeboxapi.utils.SpigotUtils;
 import lombok.AllArgsConstructor;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -74,14 +71,24 @@ public class JukeboxCommand implements CommandExecutor {
         return true;
     }
 
+    private boolean isSpigot(){
+        try {
+            Class.forName("net.md_5.bungee.api.chat.TextComponent");
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
+    }
+
     private boolean URL(CommandSender sender){
         if(sender instanceof Player) {
-            String URL = langUtils.get("user.openDomain") + "?username=" + sender.getName() + "&server=" + Jukebox.getInstance().getId();
-            TextComponent message = new TextComponent(langUtils.get("user.openClient"));
-            message.setColor(net.md_5.bungee.api.ChatColor.GOLD);
-            message.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, URL));
-            message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(langUtils.get("user.openHover")).create()));
-            ((Player) sender).spigot().sendMessage(message);
+            if(isSpigot()){
+                new SpigotUtils().URL(sender, langUtils);
+            }else{
+                String URL = langUtils.get("user.openDomain") + "?username=" + sender.getName() + "&server=" + Jukebox.getInstance().getId();
+                sender.sendMessage(ChatColor.GOLD + langUtils.get("user.openClient"));
+                sender.sendMessage(ChatColor.GOLD + URL);
+            }
         }else {
             help(sender);
         }
