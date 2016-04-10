@@ -1,8 +1,8 @@
 name: JukeboxAPI
-version: 1.12
+version: 1.13
 main: com.oliverdunk.jukeboxapi.Jukebox
 softdepend: [WorldGuard]
 
 commands:
   jukebox:
-    usage: /jukebox <music/sound> <player> <url>
+    usage: /jukebox <music/sound> <player> <url> <fadeDuration>

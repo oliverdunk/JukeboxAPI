@@ -16,6 +16,8 @@ public class Media {
     @Getter @Setter private int pan = 0;
     //If the music track should loop once complete (not applicable for sounds)
     @Getter @Setter private boolean looping = true;
+    //Fade duration (seconds), currently only applicable to music (default set in admin panel)
+    @Getter @Setter private int fadeDuration = -1;
 
     public Media(ResourceType type, String URL){
         setType(type);

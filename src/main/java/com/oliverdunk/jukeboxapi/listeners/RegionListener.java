@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.util.HashMap;
 
@@ -21,6 +22,11 @@ public class RegionListener implements Listener{
 
     public RegionListener(RegionUtils utils){
         this.utils = utils;
+    }
+
+    @EventHandler
+    public void onTeleport(PlayerTeleportEvent event){
+        onMove(new PlayerMoveEvent(event.getPlayer(), event.getFrom(), event.getTo()));
     }
 
     @EventHandler
