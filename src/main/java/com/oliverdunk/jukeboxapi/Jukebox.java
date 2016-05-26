@@ -47,7 +47,9 @@ public class Jukebox extends JavaPlugin {
      * Called when the server is restarted or stopped.
      */
     public void onDisable(){
-        regionUtils.save();
+        if(regionUtils.regionFileExists()) {
+            regionUtils.save();
+        }
     }
 
 }

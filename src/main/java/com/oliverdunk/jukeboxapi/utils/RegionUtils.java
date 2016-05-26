@@ -18,6 +18,15 @@ public class RegionUtils implements Listener {
         regions = DataUtils.loadObjectFromPath("plugins/JukeboxAPI/regions.data");
         if(regions == null) regions = new HashMap<>();
     }
+    
+    public boolean regionFileExists(){
+        File rF = new File("plugins/JukeboxAPI/regions.data");
+        if(!rF.exists()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public void save(){
         DataUtils.saveObjectToPath(regions, "plugins/JukeboxAPI/regions.data");
