@@ -39,7 +39,7 @@ public class Jukebox extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new RegionListener(regionUtils), this);
         }
 
-        Bukkit.getPluginCommand("jukebox").setExecutor(new JukeboxCommand(langUtils));
+        Bukkit.getPluginCommand("jukebox").setExecutor(new JukeboxCommand(langUtils, regionUtils));
         this.getLogger().info(this.getName() + " has been loaded!");
     }
 

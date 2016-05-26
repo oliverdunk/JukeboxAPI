@@ -1,11 +1,13 @@
 package com.oliverdunk.jukeboxapi.utils;
 
+import lombok.Getter;
 import org.bukkit.event.Listener;
 
 import java.util.HashMap;
 
 public class RegionUtils implements Listener {
 
+    @Getter
     private HashMap<String, String> regions;
 
     public RegionUtils(){

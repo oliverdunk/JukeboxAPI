@@ -6,6 +6,7 @@ import com.oliverdunk.jukeboxapi.api.ResourceType;
 import com.oliverdunk.jukeboxapi.api.models.Media;
 import com.oliverdunk.jukeboxapi.utils.LangUtils;
 import com.oliverdunk.jukeboxapi.utils.MessageUtils;
+import com.oliverdunk.jukeboxapi.utils.RegionUtils;
 import com.oliverdunk.jukeboxapi.utils.SpigotUtils;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 public class JukeboxCommand implements CommandExecutor {
 
     private LangUtils langUtils;
+    private RegionUtils regionUtils;
 
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         //If the user does not have permission to operate Jukebox, simply send them the URL
@@ -28,12 +30,14 @@ public class JukeboxCommand implements CommandExecutor {
 
         //Region commands
         if(args.length > 0 && args[0].equalsIgnoreCase("region")){
+
             //Region add command
             if(args.length == 4 && args[1].equalsIgnoreCase("add")){
                 Jukebox.getInstance().getRegionUtils().addRegion(args[2], args[3]);
                 MessageUtils.sendMessage(commandSender, "region.registered");
                 return true;
             }
+
             //Region remove command
             if(args.length == 3 && args[1].equalsIgnoreCase("remove")){
                 if(Jukebox.getInstance().getRegionUtils().hasRegion(args[2])){
@@ -44,14 +48,37 @@ public class JukeboxCommand implements CommandExecutor {
                 }
                 return true;
             }
+
+            //Region list command
+            if(args.length == 2 && args[1].equalsIgnoreCase("list")) {
+                commandSender.sendMessage(ChatColor.GREEN + "Registered Regions (" + regionUtils.getRegions().size() + "):");
+                for(String region : regionUtils.getRegions().keySet()) {
+                    commandSender.sendMessage("");
+                    commandSender.sendMessage(ChatColor.GOLD + "Name: " + ChatColor.WHITE + region);
+                    commandSender.sendMessage(ChatColor.GOLD + "URL: " + ChatColor.WHITE + regionUtils.getRegions().get(region));
+                }
+                return true;
+            }
         }
 
         //Audio commands
+        if(args.length == 5) {
+            if(args[0].equalsIgnoreCase("music")) {
+                try{
+                    int fade = Integer.parseInt(args[3]);
+                    boolean looping = Boolean.parseBoolean(args[4].toLowerCase());
+                    return play(commandSender, args, fade, looping);
+                }catch(Exception ex){
+                    commandSender.sendMessage(ChatColor.RED + "Invalid fade duration.");
+                    return true;
+                }
+            }
+        }
         if(args.length == 4){
             if(args[0].equalsIgnoreCase("music")) {
                 try{
                     int fade = Integer.parseInt(args[3]);
-                    return play(commandSender, args, fade);
+                    return play(commandSender, args, fade, false);
                 }catch(Exception ex){
                     commandSender.sendMessage(ChatColor.RED + "Invalid fade duration.");
                     return true;
@@ -60,7 +87,7 @@ public class JukeboxCommand implements CommandExecutor {
         }
         if(args.length == 3){
             //Attempt to run the music or sound effect specified
-            if(args[0].equalsIgnoreCase("music") | args[0].equalsIgnoreCase("sound")) return play(commandSender, args, -1);
+            if(args[0].equalsIgnoreCase("music") | args[0].equalsIgnoreCase("sound")) return play(commandSender, args, -1, true);
             else return help(commandSender);
         }else if(args.length == 2){
             //Attempt to stop music for the specified player
@@ -75,10 +102,11 @@ public class JukeboxCommand implements CommandExecutor {
 
     private boolean help(CommandSender sender){
         sender.sendMessage(ChatColor.GREEN + "Jukebox Commands:");
-        sender.sendMessage("/jukebox music <username> <url> <fadeDuration>");
+        sender.sendMessage("/jukebox music <username> <url> <fadeDuration> <looping>");
         sender.sendMessage("/jukebox sound <username> <url>");
         sender.sendMessage("/jukebox region add <id> <url>");
         sender.sendMessage("/jukebox region remove <id>");
+        sender.sendMessage("/jukebox region list");
         sender.sendMessage("/jukebox stop <username>");
         return true;
     }
@@ -107,7 +135,18 @@ public class JukeboxCommand implements CommandExecutor {
         return true;
     }
 
-    private boolean play(CommandSender sender, String[] args, int fadeDuration){
+    private boolean play(CommandSender sender, String[] args, int fadeDuration, boolean looping){
+        Media media;
+        if(args[0].equalsIgnoreCase("music")) media = new Media(ResourceType.MUSIC, args[2]);
+        else media = new Media(ResourceType.SOUND_EFFECT, args[2]);
+        media.setFadeDuration(fadeDuration);
+        media.setLooping(looping);
+
+        if(args[1].equalsIgnoreCase("@a")) {
+            for(Player player : Bukkit.getOnlinePlayers()) JukeboxAPI.play(player, media);
+            return true;
+        }
+
         Player playFor = Bukkit.getPlayer(args[1]);
         if(playFor == null){
             HashMap<String, String> findAndReplace = new HashMap<String, String>();
@@ -116,11 +155,6 @@ public class JukeboxCommand implements CommandExecutor {
             return true;
         }
 
-        Media media;
-        if(args[0].equalsIgnoreCase("music")) media = new Media(ResourceType.MUSIC, args[2]);
-        else media = new Media(ResourceType.SOUND_EFFECT, args[2]);
-
-        media.setFadeDuration(fadeDuration);
         JukeboxAPI.play(playFor, media);
         return true;
     }
