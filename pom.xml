@@ -6,7 +6,7 @@
 
     <groupId>com.oliverdunk</groupId>
     <artifactId>JukeboxAPI</artifactId>
-    <version>1.14-RELEASE</version>
+    <version>1.15-RELEASE</version>
 
     <repositories>
         <repository>
@@ -97,6 +97,18 @@
                                 </includes>
                             </artifactSet>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
