@@ -25,6 +25,7 @@ public class RequestHandler {
 
     /**
      * Make a request to the Jukebox API.
+     *
      * @param method The method of the API to call.
      * @param parameters Any parameters which will be passed as GET parameters to the API.
      * @return A JSONObject containing the response from the server.
@@ -67,7 +68,7 @@ public class RequestHandler {
 
     /**
      * Sets the API key which should be used for authenticating API calls.
-     * @param APIKey An API key collected from https://www.oliverdunk.com/jukebox/
+     * @param APIKey An API key collected from https://mcjukebox.net/admin/
      */
     public void setAPIKey(String APIKey) {
         this.APIKey = APIKey;
