@@ -1,16 +1,12 @@
 package com.oliverdunk.jukeboxapi.api;
 
-import com.oliverdunk.jukeboxapi.Jukebox;
+import java.io.*;
+import java.net.*;
+import java.util.Map;
+
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Map;
+import com.oliverdunk.jukeboxapi.Jukebox;
 
 public class RequestHandler {
 
@@ -25,6 +21,7 @@ public class RequestHandler {
 
     /**
      * Make a request to the Jukebox API.
+     *
      * @param method The method of the API to call.
      * @param parameters Any parameters which will be passed as GET parameters to the API.
      * @return A JSONObject containing the response from the server.
@@ -67,7 +64,8 @@ public class RequestHandler {
 
     /**
      * Sets the API key which should be used for authenticating API calls.
-     * @param APIKey An API key collected from https://www.oliverdunk.com/jukebox/
+     *
+     * @param APIKey An API key obtained from <a href="https://mcjukebox.net/admin">mcjukebox.net/admin</a>
      */
     public void setAPIKey(String APIKey) {
         this.APIKey = APIKey;

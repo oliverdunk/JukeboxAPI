@@ -1,20 +1,25 @@
 package com.oliverdunk.jukeboxapi.api;
 
-import com.oliverdunk.jukeboxapi.Jukebox;
-import com.oliverdunk.jukeboxapi.api.models.Media;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import com.oliverdunk.jukeboxapi.Jukebox;
+import com.oliverdunk.jukeboxapi.api.models.Media;
+
+/**
+ * Wrapper around the Jukebox API,
+ * contains {@link #play(Player, Media) play} and {@link #stopMusic(Player) stop} methods.
+ */
 public class JukeboxAPI {
 
     /**
      * Requests that an audio file is played to the player.
      *
      * @param player The player for which the song should be played
-     * @param media The file which should be played
+     * @param media The {@link Media media} file which should be played
      */
     public static void play(Player player, final Media media){
         final Map<String, String> parameters = new HashMap<String, String>();
