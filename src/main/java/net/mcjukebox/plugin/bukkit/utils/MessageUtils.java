@@ -1,14 +1,16 @@
-package com.oliverdunk.jukeboxapi.utils;
+package net.mcjukebox.plugin.bukkit.utils;
 
 import lombok.Setter;
+import net.mcjukebox.plugin.bukkit.managers.LangManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
 public class MessageUtils {
 
-	@Setter private static LangUtils langUtils;
+	@Setter private static LangManager langManager;
 
 	/**
 	 * Sends a message to the given player.
@@ -28,7 +30,10 @@ public class MessageUtils {
 	 * @param findAndReplace Optional list of keys which should be replaced with the corresponding values
 	 */
 	public static void sendMessage(CommandSender player, String key, HashMap<String, String> findAndReplace){
-		String message = langUtils.get(key);
+		String message = langManager.get(key);
+
+		//Don't send message if the localisation is blank
+		if(message.trim().equalsIgnoreCase("")) return;
 
 		//Replace any values in the find and replace HashMap, if it is present
 		message = ChatColor.translateAlternateColorCodes('&', message);
@@ -37,6 +42,25 @@ public class MessageUtils {
 		}
 
 		player.sendMessage(message);
+	}
+
+	public static void sendURL(Player player, String token){
+		if(isSpigot()){
+			new SpigotUtils().URL(player, langManager, token);
+		}else{
+			String URL = langManager.get("user.openDomain") + "?token=" + token;
+			player.sendMessage(ChatColor.GOLD + langManager.get("user.openClient"));
+			player.sendMessage(ChatColor.GOLD + URL);
+		}
+	}
+
+	private static boolean isSpigot(){
+		try {
+			Class.forName("net.md_5.bungee.api.chat.TextComponent");
+			return true;
+		} catch(Exception e) {
+			return false;
+		}
 	}
 
 }

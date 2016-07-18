@@ -1,4 +1,4 @@
-package com.oliverdunk.jukeboxapi.utils;
+package net.mcjukebox.plugin.bukkit.utils;
 
 import java.io.*;
 
@@ -14,33 +14,14 @@ public class DataUtils {
      */
     public static <T extends Object> void saveObjectToPath(T objectToSave, String pathToSaveTo) {
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(pathToSaveTo));
+            File file = new File(pathToSaveTo);
+            if(!file.getParentFile().exists()) file.getParentFile().mkdirs();
+            if(!file.exists()) file.createNewFile();
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
             oos.writeObject(objectToSave);
             oos.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void saveStringToPath(String stringToSave, String pathToSaveTo) {
-        try {
-            OutputStreamWriter oos = new OutputStreamWriter(new FileOutputStream(pathToSaveTo));
-            oos.write(stringToSave);
-            oos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static String getStringFromPath(String pathToLoadFrom){
-        try{
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToLoadFrom)));
-            StringBuilder object = new StringBuilder();
-            while(reader.ready()) object.append(reader.readLine());
-            return object.toString();
-        }catch(Exception ex){
-            ex.printStackTrace();
-            return null;
         }
     }
 
