@@ -1,4 +1,4 @@
-package com.oliverdunk.jukeboxapi.api;
+package net.mcjukebox.plugin.bukkit.api;
 
 public enum ResourceType {
     SOUND_EFFECT,

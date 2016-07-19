@@ -1,8 +1,8 @@
-name: JukeboxAPI
-version: 1.14
-main: com.oliverdunk.jukeboxapi.Jukebox
+name: MCJukebox
+version: 2.0
+main: net.mcjukebox.plugin.bukkit.MCJukebox
 softdepend: [WorldGuard]
 
 commands:
   jukebox:
-    usage: /jukebox <music/sound> <player> <url> <fadeDuration>
+    usage: /jukebox <music/sound> <player> {options}

@@ -1,46 +1,25 @@
-package com.oliverdunk.jukeboxapi.utils;
+package net.mcjukebox.plugin.bukkit.managers;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.util.Iterator;
 
-public class LangUtils {
+public class LangManager {
 
-	private Plugin plugin;
-	private JSONObject config;
+	private JSONObject keyValues = new JSONObject();
 
-	public LangUtils(Plugin plugin){
-		this.plugin = plugin;
+	public LangManager(){
+		addDefaults();
 	}
 
 	/**
 	 * Loads the language file from the data folder, if it exists.
 	 */
-	public void load(){
-		try {
-			final File langFile = new File(plugin.getDataFolder() + "/lang.json");
-			if(langFile.exists()) {
-				String JSON = DataUtils.getStringFromPath(langFile.getPath());
-				config = new JSONObject(JSON.toString());
-			}
-			if(config == null) config = new JSONObject();
-			addDefaults();
-			save();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	/**
-	 * Attempts to save the language file using the JSON FileWriter
-	 */
-	public void save(){
-		if(config == null) load();
-		final File langFile = new File(plugin.getDataFolder() + "/lang.json");
-		if(langFile.exists()) langFile.delete();
-		DataUtils.saveStringToPath(config.toString(4), langFile.getPath());
+	public void loadLang(JSONObject langObject){
+		keyValues = langObject;
+		addDefaults();
 	}
 
 	/**
@@ -51,15 +30,18 @@ public class LangUtils {
 	 */
 	public String get(String key){
 		String[] elements = key.split("\\.");
-		JSONObject finalParent = config;
+		JSONObject finalParent = keyValues;
 
 		for(int i = 0; i < elements.length - 1; i++){
 			if(!finalParent.has(elements[i])) finalParent.put(elements[i], new JSONObject());
 			finalParent = finalParent.getJSONObject(elements[i]);
 		}
 
-		if(elements.length == 0 && finalParent.has(key)) return finalParent.getString(key);
-		else if(finalParent.has(elements[elements.length - 1])) return finalParent.getString(elements[elements.length - 1]);
+		String value = null;
+		if(elements.length == 0 && finalParent.has(key)) value = finalParent.getString(key);
+		else if(finalParent.has(elements[elements.length - 1])) value = finalParent.getString(elements[elements.length - 1]);
+
+		if(value != null) return ChatColor.translateAlternateColorCodes('&', value);
 		return ChatColor.RED + "Missing Key: " + key;
 	}
 
@@ -71,11 +53,13 @@ public class LangUtils {
 		addDefault("region.unregistered", "&aRegion unregistered!");
 		addDefault("region.notregistered", "&cThat region is not registered!");
 
-		addDefault("user._comment", "Chat colours are not supported for these values.");
+		addDefault("user.openLoading", "&aGenerating link...");
 		addDefault("user.openClient", "Click here to launch our custom music client.");
 		addDefault("user.openHover", "Launch client");
-		addDefault("user.__comment", "If using a custom domain, please do not include '/client' below.");
 		addDefault("user.openDomain", "https://mcjukebox.net/client");
+
+		addDefault("event.clientConnect", "&aYou connected to our audio server!");
+		addDefault("event.clientDisconnect", "&cYou disconnected from our audio server.");
 
 		addDefault("command.notOnline", "&c[user] is not currently online.");
 	}
@@ -88,7 +72,7 @@ public class LangUtils {
 	 */
 	private void addDefault(String key, String value){
 		String[] elements = key.split("\\.");
-		JSONObject finalParent = config;
+		JSONObject finalParent = keyValues;
 
 		for(int i = 0; i < elements.length - 1; i++){
 			if(!finalParent.has(elements[i])) finalParent.put(elements[i], new JSONObject());

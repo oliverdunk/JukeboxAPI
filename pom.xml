@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.oliverdunk</groupId>
-    <artifactId>JukeboxAPI</artifactId>
-    <version>1.14-RELEASE</version>
+    <artifactId>MCJukebox</artifactId>
+    <version>2.0-RELEASE</version>
 
     <repositories>
         <repository>
@@ -40,6 +40,11 @@
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
             <version>6.1.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.socket</groupId>
+            <artifactId>socket.io-client</artifactId>
+            <version>0.7.0</version>
         </dependency>
     </dependencies>
 
@@ -77,7 +82,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <finalName>JukeboxAPI</finalName>
+                    <finalName>MCJukebox</finalName>
                 </configuration>
             </plugin>
             <plugin>
@@ -94,6 +99,8 @@
                             <artifactSet>
                                 <includes>
                                     <include>org.json:*</include>
+                                    <include>io.socket:*</include>
+                                    <include>com.squareup.*:*</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
