@@ -2,6 +2,7 @@ package net.mcjukebox.plugin.bukkit.managers.shows;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.api.JukeboxAPI;
 import net.mcjukebox.plugin.bukkit.api.ResourceType;
 import net.mcjukebox.plugin.bukkit.api.models.Media;
@@ -31,7 +32,7 @@ public class Show {
 	}
 
 	public void play(Media media) {
-		media.setStartTime(System.currentTimeMillis());
+		media.setStartTime(MCJukebox.getInstance().getTimeUtils().currentTimeMillis());
 		media.setChannel(channel);
 
 		if(media.getType() == ResourceType.MUSIC) {

@@ -1,5 +1,6 @@
 package net.mcjukebox.plugin.bukkit.api.models;
 
+import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.api.ResourceType;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,7 +55,7 @@ public class Media {
 
         if(options.has("startTime")) {
             if(options.get("startTime") instanceof String && options.getString("startTime").equalsIgnoreCase("now")) {
-                startTime = System.currentTimeMillis();
+                startTime = MCJukebox.getInstance().getTimeUtils().currentTimeMillis();
             } else if(options.get("startTime") instanceof Long || options.get("startTime") instanceof Integer) {
                 startTime = options.getLong("startTime");
             }

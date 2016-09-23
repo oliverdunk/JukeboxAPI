@@ -24,6 +24,8 @@ public class SocketHandler {
 
 	private Socket server;
 	private CommandSender senderTryingKey;
+	private boolean noConnectionWarned = false;
+	private long lastDripSent;
 
 	public SocketHandler() {
 		attemptConnection();
@@ -70,6 +72,15 @@ public class SocketHandler {
 			@Override
 			public void call(Object... objects) {
 				keyStatus(true, null);
+			}
+		});
+
+		server.on("drop", new Emitter.Listener() {
+			@Override
+			public void call(Object... objects) {
+				long roundTripTime = System.currentTimeMillis() - lastDripSent;
+				long serverTime = (long) objects[0];
+				MCJukebox.getInstance().getTimeUtils().updateOffset(roundTripTime, serverTime);
 			}
 		});
 
@@ -156,7 +167,11 @@ public class SocketHandler {
 
 		if(success) displayMessage = ChatColor.GREEN + "Key accepted and connection successful.";
 		else if(message != null) displayMessage = ChatColor.RED + "Key rejected with message: " + message;
-		else displayMessage = ChatColor.RED + "Lost connection to MCJukebox, servers may be updating...";
+		else {
+			if(noConnectionWarned) return;
+			noConnectionWarned = true;
+			displayMessage = ChatColor.RED + "Lost connection to MCJukebox, servers may be updating...";
+		}
 
 		//Empty queue
 		if(success) {
@@ -171,10 +186,15 @@ public class SocketHandler {
 			queue.clear();
 
 			if(ran != 0) {
-				if (senderTryingKey == null)
-					MCJukebox.getInstance().getLogger().info("Ran " + ran + " items from the queue.");
-				else senderTryingKey.sendMessage("Ran " + ran + " items from the queue.");
+				String queueMessage = ChatColor.GREEN + "Ran " + ran + " items from the queue.";
+				if (senderTryingKey == null) MCJukebox.getInstance().getLogger().info(queueMessage);
+				else senderTryingKey.sendMessage(queueMessage);
 			}
+
+			noConnectionWarned = false;
+
+			lastDripSent = System.currentTimeMillis();
+			server.emit("drip");
 		}
 
 		if(!success && message != null) new File(MCJukebox.getInstance().getDataFolder() + "/api.key").delete();

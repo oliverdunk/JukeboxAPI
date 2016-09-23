@@ -9,6 +9,7 @@ import net.mcjukebox.plugin.bukkit.managers.LangManager;
 import net.mcjukebox.plugin.bukkit.utils.MessageUtils;
 import net.mcjukebox.plugin.bukkit.managers.RegionManager;
 import lombok.Getter;
+import net.mcjukebox.plugin.bukkit.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,6 +24,7 @@ public class MCJukebox extends JavaPlugin {
     @Getter private RegionListener regionListener;
     @Getter private LangManager langManager;
     @Getter private ShowManager showManager;
+    @Getter private TimeUtils timeUtils;
 
     /**
      * Called when the plugin is first loaded by Spigot.
@@ -36,6 +38,7 @@ public class MCJukebox extends JavaPlugin {
         socketHandler = new SocketHandler();
         regionManager = new RegionManager();
         showManager = new ShowManager();
+        timeUtils = new TimeUtils();
 
         //Only register region events if WorldGuard is installed
         if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {

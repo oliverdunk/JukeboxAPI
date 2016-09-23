@@ -109,9 +109,11 @@ public class RegionListener implements Listener{
 
     @EventHandler
     public void onLeave(PlayerQuitEvent event){
-        if(!playerInRegion.containsKey(event.getPlayer().getUniqueId())) return;
-        JukeboxAPI.stopMusic(event.getPlayer());
-        playerInRegion.remove(event.getPlayer().getUniqueId());
+        if(playerInRegion.containsKey(event.getPlayer().getUniqueId())) {
+            String lastAudio = utils.getURL(playerInRegion.get(event.getPlayer().getUniqueId()));
+            if(lastAudio.toCharArray()[0] != '@') JukeboxAPI.stopMusic(event.getPlayer());
+            playerInRegion.remove(event.getPlayer().getUniqueId());
+        }
 
         ShowManager showManager = MCJukebox.getInstance().getShowManager();
         if(showManager.inInShow(event.getPlayer().getUniqueId())) {
