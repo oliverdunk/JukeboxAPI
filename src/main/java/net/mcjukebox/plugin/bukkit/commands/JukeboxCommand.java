@@ -28,7 +28,7 @@ public class JukeboxCommand implements CommandExecutor {
         if(!commandSender.hasPermission("jukeboxapi.admin")) return URL(commandSender);
 
         if(args.length == 2 && args[0].equalsIgnoreCase("setkey")) {
-            MCJukebox.getInstance().getSocketHandler().tryKey(commandSender, args[1]);
+            MCJukebox.getInstance().getSocketHandler().getKeyHandler().tryKey(commandSender, args[1]);
             commandSender.sendMessage(ChatColor.GREEN + "Trying key...");
             return true;
         }
@@ -184,8 +184,8 @@ public class JukeboxCommand implements CommandExecutor {
         if(params.has("channel") && params.get("channel") instanceof String)
             channel = params.getString("channel");
 
-        if(args[1].toCharArray()[0] == '@') {
-            Show show = MCJukebox.getInstance().getShowManager().getShow(args[1]);
+        if(args[args.length >= 3 ? 2 : 1].toCharArray()[0] == '@') {
+            Show show = MCJukebox.getInstance().getShowManager().getShow(args[args.length >= 3 ? 2 : 1]);
 
             if(scope.equalsIgnoreCase("music")) show.stopMusic(fadeDuration);
             else show.stopAll(fadeDuration);

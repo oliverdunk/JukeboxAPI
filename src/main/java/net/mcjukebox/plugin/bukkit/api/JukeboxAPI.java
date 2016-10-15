@@ -2,6 +2,7 @@ package net.mcjukebox.plugin.bukkit.api;
 
 import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.api.models.Media;
+import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.json.JSONObject;
@@ -76,6 +77,17 @@ public class JukeboxAPI {
                 MCJukebox.getInstance().getSocketHandler().emit("command/stopAll", params);
             }
         });
+    }
+
+	/**
+	 * Gets the ShowManager instance currently in use. Note that show are a client side feature, implemented
+     * as as a higher level version of our internal channels system which allows multiple audio tracks
+     * to be played simultaneously.
+     *
+     * @return ShowManager being used by MCJukebox
+     */
+    public static ShowManager getShowManager() {
+        return MCJukebox.getInstance().getShowManager();
     }
 
 }

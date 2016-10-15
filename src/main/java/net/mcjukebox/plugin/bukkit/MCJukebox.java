@@ -1,6 +1,6 @@
 package net.mcjukebox.plugin.bukkit;
 
-import net.mcjukebox.plugin.bukkit.api.SocketHandler;
+import net.mcjukebox.plugin.bukkit.sockets.SocketHandler;
 import net.mcjukebox.plugin.bukkit.commands.JukeboxCommand;
 import net.mcjukebox.plugin.bukkit.listeners.RegionListener;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
@@ -52,12 +52,6 @@ public class MCJukebox extends JavaPlugin {
 
     public String getAPIKey() {
         return (String) DataUtils.loadObjectFromPath(getDataFolder() + "/api.key");
-    }
-
-    public void setAPIKey(String key) {
-        DataUtils.saveObjectToPath(key, getDataFolder() + "/api.key");
-        socketHandler.disconnect();
-        socketHandler.attemptConnection();
     }
 
     /**
