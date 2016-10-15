@@ -31,7 +31,6 @@ public class ReconnectTask implements Runnable {
 		lastReconnectionAttempt = System.currentTimeMillis();
 
 		socketHandler.attemptConnection();
-		Bukkit.getConsoleSender().sendMessage(ChatColor.BOLD + "I AM GIVING RECONNECTING AGO OK?");
 	}
 
 	public void reset() {
