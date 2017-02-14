@@ -7,6 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.json.JSONObject;
 
+import java.util.Collections;
+import java.util.Set;
+
 public class JukeboxAPI {
 
     /**
@@ -89,6 +92,17 @@ public class JukeboxAPI {
      */
     public static ShowManager getShowManager() {
         return MCJukebox.getInstance().getShowManager();
+    }
+
+    /**
+     * Get an unmodifiable set of players who are connected to the audio server.
+     * <p>This set will be reset if the plugin is reloaded or restarted.
+     * <p>This set is for information purposes only and cannot be modified.
+     *
+     * @return an unmodifiable set of players
+     */
+    public static Set<Player> getConnectedPlayers() {
+        return Collections.unmodifiableSet(MCJukebox.getInstance().getSocketHandler().getConnectedPlayers());
     }
 
 }

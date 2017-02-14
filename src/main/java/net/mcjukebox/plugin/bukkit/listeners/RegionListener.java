@@ -123,6 +123,8 @@ public class RegionListener implements Listener{
                 show.removeMember(event.getPlayer());
             }
         }
+
+        MCJukebox.getInstance().getSocketHandler().getConnectedPlayers().remove(event.getPlayer());
     }
 
 }

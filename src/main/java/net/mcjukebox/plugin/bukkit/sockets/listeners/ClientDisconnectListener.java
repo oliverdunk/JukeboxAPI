@@ -18,6 +18,8 @@ public class ClientDisconnectListener implements Emitter.Listener {
 
         if(Bukkit.getPlayer(data.getString("username")) == null) return;
         MessageUtils.sendMessage(Bukkit.getPlayer(data.getString("username")), "event.clientDisconnect");
+
+        MCJukebox.getInstance().getSocketHandler().getConnectedPlayers().remove(Bukkit.getPlayer(data.getString("username")));
     }
 
 }

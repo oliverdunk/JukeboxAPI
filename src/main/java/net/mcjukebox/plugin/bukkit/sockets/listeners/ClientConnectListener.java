@@ -24,6 +24,8 @@ public class ClientConnectListener implements Emitter.Listener {
         Player player = Bukkit.getPlayer(data.getString("username"));
         MessageUtils.sendMessage(player, "event.clientConnect");
 
+        MCJukebox.getInstance().getSocketHandler().getConnectedPlayers().add(Bukkit.getPlayer(data.getString("username")));
+
         ShowManager showManager = MCJukebox.getInstance().getShowManager();
         if(!showManager.inInShow(player.getUniqueId())) return;
 
