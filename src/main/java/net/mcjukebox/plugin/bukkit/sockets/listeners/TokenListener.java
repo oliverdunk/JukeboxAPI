@@ -8,11 +8,11 @@ import org.json.JSONObject;
 
 public class TokenListener implements Emitter.Listener {
 
-	@Override
-	public void call(Object... objects) {
-		JSONObject data = (JSONObject) objects[0];
-		Player linkFor = Bukkit.getPlayer(data.getString("username"));
-		if(linkFor == null) return;
-		MessageUtils.sendURL(linkFor, data.getString("token"));
-	}
+    @Override
+    public void call(Object... objects) {
+        JSONObject data = (JSONObject) objects[0];
+        Player linkFor = Bukkit.getPlayer(data.getString("username"));
+        if(linkFor == null) return;
+        MessageUtils.sendURL(linkFor, data.getString("token"));
+    }
 }

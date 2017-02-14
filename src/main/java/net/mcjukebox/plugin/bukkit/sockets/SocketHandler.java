@@ -1,10 +1,10 @@
 package net.mcjukebox.plugin.bukkit.sockets;
 
+import io.socket.client.IO;
+import io.socket.client.Socket;
 import lombok.Getter;
 import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.sockets.listeners.*;
-import io.socket.client.IO;
-import io.socket.client.Socket;
 import org.bukkit.Bukkit;
 import org.json.JSONObject;
 

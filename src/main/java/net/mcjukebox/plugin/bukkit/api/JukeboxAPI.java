@@ -72,15 +72,16 @@ public class JukeboxAPI {
         params.put("username", player.getName());
         params.put("channel", channel);
         if(fadeDuration != -1) params.put("fadeDuration", fadeDuration);
-;        Bukkit.getScheduler().runTaskAsynchronously(MCJukebox.getInstance(), new Runnable() {
+
+       Bukkit.getScheduler().runTaskAsynchronously(MCJukebox.getInstance(), new Runnable() {
             public void run() {
                 MCJukebox.getInstance().getSocketHandler().emit("command/stopAll", params);
             }
         });
     }
 
-	/**
-	 * Gets the ShowManager instance currently in use. Note that show are a client side feature, implemented
+    /**
+     * Gets the ShowManager instance currently in use. Note that show are a client side feature, implemented
      * as as a higher level version of our internal channels system which allows multiple audio tracks
      * to be played simultaneously.
      *

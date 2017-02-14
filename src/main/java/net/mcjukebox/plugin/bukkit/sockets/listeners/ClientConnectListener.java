@@ -13,24 +13,24 @@ import org.json.JSONObject;
 
 public class ClientConnectListener implements Emitter.Listener {
 
-	@Override
-	public void call(Object... objects) {
-		JSONObject data = (JSONObject) objects[0];
-		ClientConnectEvent event = new ClientConnectEvent(
-				data.getString("username"), data.getLong("timestamp"));
-		MCJukebox.getInstance().getServer().getPluginManager().callEvent(event);
+    @Override
+    public void call(Object... objects) {
+        JSONObject data = (JSONObject) objects[0];
+        ClientConnectEvent event = new ClientConnectEvent(
+                data.getString("username"), data.getLong("timestamp"));
+        MCJukebox.getInstance().getServer().getPluginManager().callEvent(event);
 
-		if(Bukkit.getPlayer(data.getString("username")) == null) return;
-		Player player = Bukkit.getPlayer(data.getString("username"));
-		MessageUtils.sendMessage(player, "event.clientConnect");
+        if(Bukkit.getPlayer(data.getString("username")) == null) return;
+        Player player = Bukkit.getPlayer(data.getString("username"));
+        MessageUtils.sendMessage(player, "event.clientConnect");
 
-		ShowManager showManager = MCJukebox.getInstance().getShowManager();
-		if(!showManager.inInShow(player.getUniqueId())) return;
+        ShowManager showManager = MCJukebox.getInstance().getShowManager();
+        if(!showManager.inInShow(player.getUniqueId())) return;
 
-		for(Show show : showManager.getShowsByPlayer(player.getUniqueId())) {
-			if(show.getCurrentTrack() != null)
-				JukeboxAPI.play(player, show.getCurrentTrack());
-		}
-	}
+        for(Show show : showManager.getShowsByPlayer(player.getUniqueId())) {
+            if(show.getCurrentTrack() != null)
+                JukeboxAPI.play(player, show.getCurrentTrack());
+        }
+    }
 
 }
