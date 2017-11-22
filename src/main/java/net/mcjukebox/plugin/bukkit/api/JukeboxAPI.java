@@ -24,6 +24,7 @@ public class JukeboxAPI {
         params.put("url", media.getURL());
         params.put("volume", media.getVolume());
         params.put("looping", media.isLooping());
+        params.put("continueTrack", media.isContinueTrack());
         params.put("channel", media.getChannel());
         if(media.getFadeDuration() != -1) params.put("fadeDuration", media.getFadeDuration());
         if(media.getStartTime() != -1) params.put("startTime", media.getStartTime());
