@@ -1,14 +1,17 @@
 package net.mcjukebox.plugin.bukkit.sockets;
 
+import io.socket.client.IO;
+import io.socket.client.Socket;
 import lombok.Getter;
 import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.sockets.listeners.*;
-import io.socket.client.IO;
-import io.socket.client.Socket;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.json.JSONObject;
 
 import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SocketHandler {
 
@@ -17,6 +20,13 @@ public class SocketHandler {
 	@Getter private DropListener dropListener = new DropListener();
 	@Getter private KeyHandler keyHandler = new KeyHandler(this);
 	@Getter private ConnectionListener connectionListener = new ConnectionListener(this);
+
+    /**
+     * Set containing players who have the audio server open
+     * <p>This set should ONLY be modified from within the
+     * Jukebox plugin to avoid conflicts or concurrency issues.
+     */
+	@Getter private Set<Player> connectedPlayers = new HashSet<Player>();
 
 	public SocketHandler() {
 		reconnectTask = new ReconnectTask(this);

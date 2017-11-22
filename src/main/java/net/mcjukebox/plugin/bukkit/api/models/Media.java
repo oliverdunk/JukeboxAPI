@@ -13,7 +13,7 @@ public class Media {
 
     //The following options are only supported for the MUSIC resource type
     @Getter @Setter private int volume = 100;
-    @Getter @Setter private boolean looping = true;
+    @Getter @Setter private boolean looping = true, continueTrack = false;
     @Getter @Setter private int fadeDuration = -1;
     @Getter @Setter private long startTime = -1;
     @Getter @Setter private String channel = "default";
@@ -64,6 +64,12 @@ public class Media {
         if(options.has("channel")) {
             if(options.get("channel") instanceof String) {
                 this.channel = options.getString("channel");
+            }
+        }
+
+        if(options.has("continue")) {
+            if(options.get("continue") instanceof Boolean) {
+                continueTrack = options.getBoolean("continue");
             }
         }
     }
