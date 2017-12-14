@@ -56,7 +56,7 @@ public class MessageUtils {
 
 	private static boolean isSpigot(){
 		try {
-			Class.forName("net.md_5.bungee.api.chat.TextComponent");
+			Class.forName("org.spigotmc.SpigotConfig");
 			return true;
 		} catch(Exception e) {
 			return false;
