@@ -1,5 +1,5 @@
 name: MCJukebox
-version: 2.2
+version: 2.3
 main: net.mcjukebox.plugin.bukkit.MCJukebox
 softdepend: [WorldGuard]
 
