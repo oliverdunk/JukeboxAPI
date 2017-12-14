@@ -106,15 +106,15 @@
                                     <shadedPattern>net.mcjukebox.plugin.bukkit.libs.socket</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>io.okhttp3</pattern>
+                                    <pattern>okhttp3</pattern>
                                     <shadedPattern>net.mcjukebox.plugin.bukkit.libs.okhttp3</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>io.okio</pattern>
+                                    <pattern>okio</pattern>
                                     <shadedPattern>net.mcjukebox.plugin.bukkit.libs.okio</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>io.json</pattern>
+                                    <pattern>org.json</pattern>
                                     <shadedPattern>net.mcjukebox.plugin.bukkit.libs.json</shadedPattern>
                                 </relocation>
                             </relocations>
