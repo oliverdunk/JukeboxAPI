@@ -24,11 +24,13 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20140107</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -40,11 +42,13 @@
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
             <version>6.1.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.socket</groupId>
             <artifactId>socket.io-client</artifactId>
             <version>1.0.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -96,13 +100,24 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>org.json:*</include>
-                                    <include>io.socket:*</include>
-                                    <include>com.squareup.*:*</include>
-                                </includes>
-                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>io.socket</pattern>
+                                    <shadedPattern>net.mcjukebox.plugin.bukkit.libs.socket</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>io.okhttp3</pattern>
+                                    <shadedPattern>net.mcjukebox.plugin.bukkit.libs.okhttp3</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>io.okio</pattern>
+                                    <shadedPattern>net.mcjukebox.plugin.bukkit.libs.okio</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>io.json</pattern>
+                                    <shadedPattern>net.mcjukebox.plugin.bukkit.libs.json</shadedPattern>
+                                </relocation>
+                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
