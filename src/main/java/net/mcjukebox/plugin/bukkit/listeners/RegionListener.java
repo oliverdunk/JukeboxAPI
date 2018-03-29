@@ -11,12 +11,14 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import net.mcjukebox.plugin.bukkit.managers.shows.Show;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.vehicle.VehicleMoveEvent;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -39,6 +41,13 @@ public class RegionListener implements Listener{
     @EventHandler
     public void onTeleport(PlayerTeleportEvent event){
         onMove(new PlayerMoveEvent(event.getPlayer(), event.getFrom(), event.getTo()));
+    }
+
+    @EventHandler
+    public void onMinecartMove(VehicleMoveEvent event) {
+        if (event.getVehicle().getPassenger() != null && event.getVehicle().getPassenger() instanceof Player) {
+            onMove(new PlayerMoveEvent((Player) event.getVehicle().getPassenger(), event.getFrom(), event.getTo()));
+        }
     }
 
     @EventHandler
