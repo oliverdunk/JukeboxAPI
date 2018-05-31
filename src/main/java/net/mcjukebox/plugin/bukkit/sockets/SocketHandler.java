@@ -15,11 +15,13 @@ public class SocketHandler {
 	@Getter private Socket server;
 	@Getter private ReconnectTask reconnectTask;
 	@Getter private DropListener dropListener = new DropListener();
+	@Getter private TokenListener tokenListener;
 	@Getter private KeyHandler keyHandler = new KeyHandler(this);
 	@Getter private ConnectionListener connectionListener = new ConnectionListener(this);
 
 	public SocketHandler() {
 		reconnectTask = new ReconnectTask(this);
+		tokenListener = new TokenListener();
 		Bukkit.getScheduler().runTaskTimerAsynchronously(MCJukebox.getInstance(), reconnectTask, 0, 1 * 20);
 		attemptConnection();
 	}
@@ -62,7 +64,7 @@ public class SocketHandler {
 		server.on("event/clientConnect", new ClientConnectListener());
 		server.on("event/clientDisconnect", new ClientDisconnectListener());
 		server.on("data/lang", new LangListener());
-		server.on("data/token", new TokenListener());
+		server.on("data/token", tokenListener);
 	}
 
 	public void emit(String channel, @Nullable JSONObject params) {

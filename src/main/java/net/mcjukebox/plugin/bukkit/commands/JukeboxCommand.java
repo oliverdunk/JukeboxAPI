@@ -114,11 +114,16 @@ public class JukeboxCommand implements CommandExecutor {
         else return help(commandSender);
     }
 
-    private boolean URL(CommandSender sender) {
+    private boolean URL(final CommandSender sender) {
         MessageUtils.sendMessage(sender, "user.openLoading");
-        JSONObject params = new JSONObject();
-        params.put("username", sender.getName());
-        MCJukebox.getInstance().getSocketHandler().emit("command/getToken", params);
+        Bukkit.getScheduler().runTaskAsynchronously(MCJukebox.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                if (!(sender instanceof Player)) return;
+                String token = JukeboxAPI.getToken((Player) sender);
+                MessageUtils.sendURL((Player) sender, token);
+            }
+        });
         return true;
     }
 

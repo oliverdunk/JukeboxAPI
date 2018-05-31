@@ -3,6 +3,7 @@ package net.mcjukebox.plugin.bukkit.api;
 import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.api.models.Media;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
+import net.mcjukebox.plugin.bukkit.sockets.listeners.TokenListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.json.JSONObject;
@@ -77,6 +78,36 @@ public class JukeboxAPI {
                 MCJukebox.getInstance().getSocketHandler().emit("command/stopAll", params);
             }
         });
+    }
+
+    /**
+     * Gets the authentication token needed for a player to open the client. Since tokens are requested from the server,
+     * this method blocks the thread until a token is received. It should always be run asynchronously.
+     *
+     * @param player The player to get the token for
+     * @return Token to be used in the query parameters of the client URL
+     */
+    public static String getToken(Player player) {
+        // Construct and send request for token
+        JSONObject params = new JSONObject();
+        params.put("username", player.getName());
+        MCJukebox.getInstance().getSocketHandler().emit("command/getToken", params);
+
+        // Create a new lock that can be notified when a token is received
+        Object lock = new Object();
+
+        synchronized (lock) {
+            try {
+                TokenListener tokenListener = MCJukebox.getInstance().getSocketHandler().getTokenListener();
+                // Register the lock so that we are notified when a new token is received
+                tokenListener.addLock(player.getName(), lock);
+                lock.wait();
+                return tokenListener.getToken(player.getName());
+            } catch (InterruptedException exception) {
+                // This should never happen, so someone has gone out of their way to cancel this call
+                return null;
+            }
+        }
     }
 
 	/**
