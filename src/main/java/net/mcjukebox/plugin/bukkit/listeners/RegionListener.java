@@ -83,12 +83,11 @@ public class RegionListener implements Listener{
                 if (lastShow == null) {
                     //Region no longer exists, stop the music.
                     JukeboxAPI.stopMusic(e.getPlayer());
+                    return;
                 } else if(lastShow.toCharArray()[0] == '@') {
                     showManager.getShow(lastShow).removeMember(e.getPlayer());
                     return;
                 }
-
-                JukeboxAPI.stopMusic(e.getPlayer());
             }
             return;
         }

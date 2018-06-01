@@ -39,19 +39,18 @@ public class RegionManager implements Listener {
         ShowManager showManager = MCJukebox.getInstance().getShowManager();
         HashMap<UUID, String> playersInRegion = MCJukebox.getInstance().getRegionListener().getPlayerInRegion();
 
-        for (HashMap.Entry<UUID, String> entry: playersInRegion.entrySet()) {
+        for (HashMap.Entry<UUID, String> entry : playersInRegion.entrySet()) {
             UUID uuid = entry.getKey();
             String regionID = entry.getValue();
 
             if (regionID.equals(ID)) {
-
                 if (regions.get(ID).charAt(0) == '@') {
                     showManager.getShow(regions.get(ID)).removeMember(Bukkit.getPlayer(uuid));
                 } else {
                     JukeboxAPI.stopMusic(Bukkit.getPlayer(uuid));
+                    playersInRegion.remove(uuid);
                 }
             }
-
         }
         regions.remove(ID);
     }
