@@ -189,6 +189,12 @@ public class JukeboxCommand implements CommandExecutor {
         if(params.has("channel") && params.get("channel") instanceof String)
             channel = params.getString("channel");
 
+        if(args[args.length >= 3 ? 2 : 1].equalsIgnoreCase("@a")) {
+            if(scope.equalsIgnoreCase("music")) for (Player player : Bukkit.getOnlinePlayers()) JukeboxAPI.stopMusic(player, channel, fadeDuration);
+            else for (Player player : Bukkit.getOnlinePlayers()) JukeboxAPI.stopAll(player, channel, fadeDuration);
+            return true;
+        }
+
         if(args[args.length >= 3 ? 2 : 1].toCharArray()[0] == '@') {
             Show show = MCJukebox.getInstance().getShowManager().getShow(args[args.length >= 3 ? 2 : 1]);
 
