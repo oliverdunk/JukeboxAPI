@@ -16,9 +16,13 @@ public class TimeUtils {
 		long estimatedTime = serverTime + offsetFromServer;
 
 		offset = estimatedTime - System.currentTimeMillis();
-		hasUpdated = true;
 
-		MCJukebox.getInstance().getLogger().info("Predicted time offset: " + offset + "ms.");
+		if (!hasUpdated()) {
+			// This is our first offset prediction
+			MCJukebox.getInstance().getLogger().info("Predicted time offset: " + offset + "ms.");
+			MCJukebox.getInstance().getLogger().info("This will be silently updated every 30 seconds.");
+			hasUpdated = true;
+		}
 	}
 
 	public long currentTimeMillis() {

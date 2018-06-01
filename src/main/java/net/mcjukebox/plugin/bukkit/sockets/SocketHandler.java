@@ -14,6 +14,7 @@ public class SocketHandler {
 
 	@Getter private Socket server;
 	@Getter private ReconnectTask reconnectTask;
+	@Getter private DripTask dripTask;
 	@Getter private DropListener dropListener = new DropListener();
 	@Getter private TokenListener tokenListener;
 	@Getter private KeyHandler keyHandler = new KeyHandler(this);
@@ -21,8 +22,10 @@ public class SocketHandler {
 
 	public SocketHandler() {
 		reconnectTask = new ReconnectTask(this);
+		dripTask = new DripTask(this);
 		tokenListener = new TokenListener();
 		Bukkit.getScheduler().runTaskTimerAsynchronously(MCJukebox.getInstance(), reconnectTask, 0, 1 * 20);
+		Bukkit.getScheduler().runTaskTimerAsynchronously(MCJukebox.getInstance(), dripTask, 0, 30 * 20);
 		attemptConnection();
 	}
 
