@@ -80,7 +80,7 @@ public class RegionListener implements Listener{
                 String lastShow = utils.getURL(playerInRegion.get(e.getPlayer().getUniqueId()));
                 playerInRegion.remove(e.getPlayer().getUniqueId());
 
-                if (lastShow == null) {
+                if (lastShow == null || lastShow.toCharArray()[0] != '@') {
                     //Region no longer exists, stop the music.
                     JukeboxAPI.stopMusic(e.getPlayer());
                     return;
