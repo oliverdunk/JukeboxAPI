@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class RegionManager implements Listener {
@@ -39,7 +40,7 @@ public class RegionManager implements Listener {
         ShowManager showManager = MCJukebox.getInstance().getShowManager();
         HashMap<UUID, String> playersInRegion = MCJukebox.getInstance().getRegionListener().getPlayerInRegion();
 
-        for (HashMap.Entry<UUID, String> entry : playersInRegion.entrySet()) {
+        for (Map.Entry<UUID, String> entry : playersInRegion.entrySet()) {
             UUID uuid = entry.getKey();
             String regionID = entry.getValue();
 
