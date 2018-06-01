@@ -80,12 +80,14 @@ public class RegionListener implements Listener{
                 String lastShow = utils.getURL(playerInRegion.get(e.getPlayer().getUniqueId()));
                 playerInRegion.remove(e.getPlayer().getUniqueId());
 
-                if(lastShow.toCharArray()[0] == '@') {
+                if (lastShow == null || lastShow.toCharArray()[0] != '@') {
+                    //Region no longer exists, stop the music.
+                    JukeboxAPI.stopMusic(e.getPlayer());
+                    return;
+                } else if(lastShow.toCharArray()[0] == '@') {
                     showManager.getShow(lastShow).removeMember(e.getPlayer());
                     return;
                 }
-
-                JukeboxAPI.stopMusic(e.getPlayer());
             }
             return;
         }
@@ -120,7 +122,11 @@ public class RegionListener implements Listener{
     public void onLeave(PlayerQuitEvent event){
         if(playerInRegion.containsKey(event.getPlayer().getUniqueId())) {
             String lastAudio = utils.getURL(playerInRegion.get(event.getPlayer().getUniqueId()));
-            if(lastAudio.toCharArray()[0] != '@') JukeboxAPI.stopMusic(event.getPlayer());
+
+            if(lastAudio == null || lastAudio.toCharArray()[0] != '@') {
+                JukeboxAPI.stopMusic(event.getPlayer());
+            }
+
             playerInRegion.remove(event.getPlayer().getUniqueId());
         }
 
