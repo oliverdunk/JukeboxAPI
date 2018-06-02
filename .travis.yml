@@ -1,6 +1,8 @@
 language: java
+sudo: false
 jdk:
 - openjdk7
+- oraclejdk8
 deploy:
   provider: releases
   skip_cleanup: true
