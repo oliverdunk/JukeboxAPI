@@ -39,6 +39,17 @@ public class JukeboxCommand implements CommandExecutor {
             return true;
         }
 
+        if (args.length == 2 && args[0].equalsIgnoreCase("import")) {
+            if (args[1].equalsIgnoreCase("oa")) {
+                int imported = regionManager.importFromOA();
+                commandSender.sendMessage("" + ChatColor.GREEN + imported + " region(s) imported.");
+                return true;
+            } else {
+                commandSender.sendMessage(ChatColor.RED + "Unknown import source.");
+                return true;
+            }
+        }
+
         //Region commands
         if(args.length > 0 && args[0].equalsIgnoreCase("region")){
 
@@ -138,6 +149,7 @@ public class JukeboxCommand implements CommandExecutor {
         sender.sendMessage("/jukebox region list");
         sender.sendMessage("/jukebox show add/remove <username> <@show>");
         sender.sendMessage("/jukebox setkey <apikey>");
+        sender.sendMessage("/jukebox import <src>");
         return true;
     }
 
