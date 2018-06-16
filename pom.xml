@@ -6,7 +6,7 @@
 
     <groupId>com.oliverdunk</groupId>
     <artifactId>MCJukebox</artifactId>
-    <version>2.5-RELEASE</version>
+    <version>2.5.1-RELEASE</version>
 
     <repositories>
         <repository>
