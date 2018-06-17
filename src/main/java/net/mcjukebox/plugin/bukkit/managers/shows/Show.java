@@ -69,4 +69,15 @@ public class Show {
 		}
 	}
 
+	protected void jumpBack(long offset) {
+		if (currentTrack == null) return;
+		currentTrack.setStartTime(currentTrack.getStartTime() + offset);
+
+		// Send updated start time to all connected players
+		for(UUID UUID : members.keySet()) {
+			if(Bukkit.getPlayer(UUID) == null) continue;
+			JukeboxAPI.play(Bukkit.getPlayer(UUID), currentTrack);
+		}
+	}
+
 }

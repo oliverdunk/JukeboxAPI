@@ -1,5 +1,6 @@
 package net.mcjukebox.plugin.bukkit;
 
+import net.mcjukebox.plugin.bukkit.managers.shows.ShowSyncTask;
 import net.mcjukebox.plugin.bukkit.sockets.SocketHandler;
 import net.mcjukebox.plugin.bukkit.commands.JukeboxCommand;
 import net.mcjukebox.plugin.bukkit.listeners.RegionListener;
@@ -37,7 +38,11 @@ public class MCJukebox extends JavaPlugin {
 
         socketHandler = new SocketHandler();
         regionManager = new RegionManager();
+
         showManager = new ShowManager();
+        // This needs to be run synchronously so it can identify when the main thread is busy
+        Bukkit.getScheduler().runTaskTimer(this, new ShowSyncTask(), 1, 1);
+
         timeUtils = new TimeUtils();
 
         //Only register region events if WorldGuard is installed
