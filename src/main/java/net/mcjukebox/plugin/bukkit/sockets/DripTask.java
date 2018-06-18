@@ -10,7 +10,7 @@ public class DripTask implements Runnable {
 
     @Override
     public void run() {
-        if (socketHandler.getServer().connected()) {
+        if (socketHandler.getServer() != null && socketHandler.getServer().connected()) {
             socketHandler.getDropListener().setLastDripSent(System.currentTimeMillis());
             socketHandler.emit("drip", null);
         }
