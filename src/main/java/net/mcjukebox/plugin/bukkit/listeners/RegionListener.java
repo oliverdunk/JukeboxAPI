@@ -100,6 +100,7 @@ public class RegionListener implements Listener{
                 utils.getURL(highestRegion))) {
             // No need to restart the track, or re-add them to a show, but still update our records
             playerInRegion.put(e.getPlayer().getUniqueId(), highestRegion);
+            return;
         }
 
         if(playerInRegion.containsKey(e.getPlayer().getUniqueId())) {
