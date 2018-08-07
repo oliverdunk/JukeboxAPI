@@ -1,12 +1,14 @@
 package net.mcjukebox.plugin.bukkit.listeners;
 
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.internal.platform.WorldGuardPlatform;
 import lombok.Getter;
 import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.api.JukeboxAPI;
 import net.mcjukebox.plugin.bukkit.api.ResourceType;
 import net.mcjukebox.plugin.bukkit.api.models.Media;
 import net.mcjukebox.plugin.bukkit.managers.RegionManager;
-import com.sk89q.worldguard.bukkit.WGBukkit;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import net.mcjukebox.plugin.bukkit.managers.shows.Show;
@@ -56,8 +58,11 @@ public class RegionListener implements Listener{
         if(!(e.getFrom().getX() != e.getTo().getX() || e.getFrom().getZ() != e.getTo().getZ())) return;
 
         //Get all applicable regions which the player is moving into
-        com.sk89q.worldguard.protection.managers.RegionManager regionManager = WGBukkit.getRegionManager(e.getTo().getWorld());
-        ApplicableRegionSet regions = regionManager.getApplicableRegions(e.getTo());
+        WorldGuardPlatform worldGuardPlatform = WorldGuard
+            .getInstance().getPlatform();
+        com.sk89q.worldguard.protection.managers.RegionManager regionManager = worldGuardPlatform.getRegionContainer().get(worldGuardPlatform.getWorldByName(e.getTo().getWorld().getName()));
+        org.bukkit.util.Vector vector = e.getTo().toVector();
+        ApplicableRegionSet regions = regionManager.getApplicableRegions(new Vector(vector.getX(), vector.getY(), vector.getZ()));
 
         ShowManager showManager = MCJukebox.getInstance().getShowManager();
 
