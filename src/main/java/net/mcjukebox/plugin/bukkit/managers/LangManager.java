@@ -56,7 +56,7 @@ public class LangManager {
 		addDefault("user.openLoading", "&aGenerating link...");
 		addDefault("user.openClient", "Click here to launch our custom music client.");
 		addDefault("user.openHover", "Launch client");
-		addDefault("user.openDomain", "https://mcjukebox.net/client");
+		addDefault("user.openDomain", "https://client.mcjukebox.net");
 
 		addDefault("event.clientConnect", "&aYou connected to our audio server!");
 		addDefault("event.clientDisconnect", "&cYou disconnected from our audio server.");
