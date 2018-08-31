@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -62,9 +63,11 @@ public class RegionManager implements Listener {
         ShowManager showManager = MCJukebox.getInstance().getShowManager();
         HashMap<UUID, String> playersInRegion = MCJukebox.getInstance().getRegionListener().getPlayerInRegion();
 
-        for (Map.Entry<UUID, String> entry : playersInRegion.entrySet()) {
-            UUID uuid = entry.getKey();
-            String regionID = entry.getValue();
+        Iterator<UUID> keys = playersInRegion.keySet().iterator();
+
+        while (keys.hasNext()) {
+            UUID uuid = keys.next();
+            String regionID = playersInRegion.get(uuid);
 
             if (regionID.equals(ID)) {
                 if (regions.get(ID).charAt(0) == '@') {
@@ -75,6 +78,7 @@ public class RegionManager implements Listener {
                 }
             }
         }
+
         regions.remove(ID);
     }
 
