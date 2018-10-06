@@ -1,5 +1,6 @@
 package net.mcjukebox.plugin.bukkit;
 
+import net.mcjukebox.plugin.bukkit.managers.skript.SkriptManager;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowSyncTask;
 import net.mcjukebox.plugin.bukkit.sockets.SocketHandler;
 import net.mcjukebox.plugin.bukkit.commands.JukeboxCommand;
@@ -22,6 +23,7 @@ public class MCJukebox extends JavaPlugin {
     @Getter private static MCJukebox instance;
     @Getter private SocketHandler socketHandler;
     @Getter private RegionManager regionManager;
+    @Getter private SkriptManager skriptManager;
     @Getter private RegionListener regionListener;
     @Getter private LangManager langManager;
     @Getter private ShowManager showManager;
@@ -45,10 +47,14 @@ public class MCJukebox extends JavaPlugin {
 
         timeUtils = new TimeUtils();
 
-        //Only register region events if WorldGuard is installed
+        // Only register region events if WorldGuard is installed
         if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
             regionListener = new RegionListener(regionManager);
             Bukkit.getPluginManager().registerEvents(regionListener, this);
+        }
+
+        if (Bukkit.getPluginManager().getPlugin("Skript") != null) {
+            skriptManager = new SkriptManager();
         }
 
         Bukkit.getPluginCommand("jukebox").setExecutor(new JukeboxCommand(regionManager));

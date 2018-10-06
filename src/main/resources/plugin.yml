@@ -1,7 +1,7 @@
 name: MCJukebox
 version: 2.5.3
 main: net.mcjukebox.plugin.bukkit.MCJukebox
-softdepend: [WorldGuard]
+softdepend: [WorldGuard, Skript]
 
 commands:
   jukebox:
