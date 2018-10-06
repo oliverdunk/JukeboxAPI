@@ -6,11 +6,10 @@ import net.mcjukebox.plugin.bukkit.api.JukeboxAPI;
 import net.mcjukebox.plugin.bukkit.api.ResourceType;
 import net.mcjukebox.plugin.bukkit.api.models.Media;
 import net.mcjukebox.plugin.bukkit.managers.RegionManager;
-import com.sk89q.worldguard.bukkit.WGBukkit;
-import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import net.mcjukebox.plugin.bukkit.managers.shows.Show;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
+import net.mcjukebox.shared.utils.RegionUtils;
+import net.mcjukebox.shared.api.Region;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -55,26 +54,22 @@ public class RegionListener implements Listener{
         //Only execute if the player moves an entire block
         if(!(e.getFrom().getX() != e.getTo().getX() || e.getFrom().getZ() != e.getTo().getZ())) return;
 
-        //Get all applicable regions which the player is moving into
-        com.sk89q.worldguard.protection.managers.RegionManager regionManager = WGBukkit.getRegionManager(e.getTo().getWorld());
-        ApplicableRegionSet regions = regionManager.getApplicableRegions(e.getTo());
-
-        ShowManager showManager = MCJukebox.getInstance().getShowManager();
-
         int highestPriority = -1;
         String highestRegion = null;
-        for(ProtectedRegion region : regions.getRegions()){
-            if(region.getPriority() > highestPriority && utils.hasRegion(region.getId())){
+        for (Region region : RegionUtils.getInstance().getProvider().getApplicableRegions(e.getTo())) {
+            if (region.getPriority() > highestPriority && utils.hasRegion(region.getId())) {
                 highestPriority = region.getPriority();
                 highestRegion = region.getId();
             }
         }
 
+        ShowManager showManager = MCJukebox.getInstance().getShowManager();
+
         if(highestRegion == null && utils.hasRegion("__global__")) {
             highestRegion = "__global__";
         }
 
-        //In this case, there are no applicable regions so we need go no further
+        //In this case, there are no applicable shared so we need go no further
         if(highestRegion == null){
             if(playerInRegion.containsKey(e.getPlayer().getUniqueId())){
                 String lastShow = utils.getURL(playerInRegion.get(e.getPlayer().getUniqueId()));

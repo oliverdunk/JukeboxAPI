@@ -1,6 +1,5 @@
 package net.mcjukebox.plugin.bukkit.sockets;
 
-import io.socket.emitter.Emitter;
 import lombok.Getter;
 import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.utils.DataUtils;
