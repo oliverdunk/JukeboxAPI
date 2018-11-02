@@ -1,6 +1,8 @@
 language: java
 jdk:
 - openjdk7
+before_install:
+  - ./scripts/installSkript.sh
 deploy:
   provider: releases
   skip_cleanup: true
