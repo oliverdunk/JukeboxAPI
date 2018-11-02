@@ -1,5 +1,5 @@
 .DS_STORE
 .idea/
 dependency-reduced-pom.xml
-jukebox_plugin.iml
+*.iml
 target/
