@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import javax.annotation.Nullable;
 import java.io.File;
 
 public class KeyHandler {
@@ -26,7 +25,7 @@ public class KeyHandler {
 		currentlyTryingKey = null;
 	}
 
-	public void tryKey(@Nullable CommandSender sender, String key) {
+	public void tryKey(CommandSender sender, String key) {
 		currentlyTryingKey = sender;
 		DataUtils.saveObjectToPath(key, MCJukebox.getInstance().getDataFolder() + "/api.key");
 		socketHandler.disconnect();

@@ -8,8 +8,6 @@ import io.socket.client.Socket;
 import org.bukkit.Bukkit;
 import org.json.JSONObject;
 
-import javax.annotation.Nullable;
-
 public class SocketHandler {
 
 	@Getter private Socket server;
@@ -70,7 +68,7 @@ public class SocketHandler {
 		server.on("data/token", tokenListener);
 	}
 
-	public void emit(String channel, @Nullable JSONObject params) {
+	public void emit(String channel, JSONObject params) {
 		if(server == null || !server.connected()) connectionListener.addToQueue(channel, params);
 		else server.emit(channel, params);
 	}
