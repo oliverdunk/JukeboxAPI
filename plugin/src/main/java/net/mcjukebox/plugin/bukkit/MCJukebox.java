@@ -3,7 +3,7 @@ package net.mcjukebox.plugin.bukkit;
 import net.mcjukebox.plugin.bukkit.managers.skript.SkriptManager;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowSyncTask;
 import net.mcjukebox.plugin.bukkit.sockets.SocketHandler;
-import net.mcjukebox.plugin.bukkit.commands.JukeboxCommand;
+import net.mcjukebox.plugin.bukkit.commands.JukeboxCommandExecutor;
 import net.mcjukebox.plugin.bukkit.listeners.RegionListener;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
 import net.mcjukebox.plugin.bukkit.utils.DataUtils;
@@ -57,7 +57,7 @@ public class MCJukebox extends JavaPlugin {
             skriptManager = new SkriptManager();
         }
 
-        Bukkit.getPluginCommand("jukebox").setExecutor(new JukeboxCommand(regionManager));
+        Bukkit.getPluginCommand("jukebox").setExecutor(new JukeboxCommandExecutor(regionManager));
         this.getLogger().info(this.getName() + " has been loaded!");
     }
 
