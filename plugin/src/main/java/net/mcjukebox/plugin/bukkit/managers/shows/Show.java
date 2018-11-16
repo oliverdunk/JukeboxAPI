@@ -67,6 +67,7 @@ public class Show {
 			if(Bukkit.getPlayer(UUID) == null) continue;
 			JukeboxAPI.stopAll(Bukkit.getPlayer(UUID), channel, fadeDuration);
 		}
+		this.currentTrack = null;
 	}
 
 	protected void jumpBack(long offset) {
