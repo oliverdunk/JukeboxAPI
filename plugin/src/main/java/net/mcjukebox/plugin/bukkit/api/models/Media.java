@@ -47,7 +47,7 @@ public class Media {
 
         if(options.has("fadeDuration")) {
             if(options.get("fadeDuration") instanceof Integer) {
-                if (options.getInt("fadeDuration") <= 30 && options.getInt("fadeDuration") > 0) {
+                if (options.getInt("fadeDuration") <= 30 && options.getInt("fadeDuration") >= 0) {
                     fadeDuration = options.getInt("fadeDuration");
                 }
             }
