@@ -16,15 +16,15 @@ public class RegionCommand extends JukeboxCommand {
     public boolean execute(CommandSender dispatcher, String[] args) {
         // region add <id> <url>
         if(args.length == 3 && args[0].equalsIgnoreCase("add")){
-            MCJukebox.getInstance().getRegionManager().addRegion(args[0], args[1]);
+            MCJukebox.getInstance().getRegionManager().addRegion(args[1], args[2]);
             MessageUtils.sendMessage(dispatcher, "region.registered");
             return true;
         }
 
         // region remove <id>
         if(args.length == 2 && args[0].equalsIgnoreCase("remove")){
-            if(MCJukebox.getInstance().getRegionManager().hasRegion(args[2])){
-                MCJukebox.getInstance().getRegionManager().removeRegion(args[2]);
+            if(MCJukebox.getInstance().getRegionManager().hasRegion(args[1])){
+                MCJukebox.getInstance().getRegionManager().removeRegion(args[1]);
                 MessageUtils.sendMessage(dispatcher, "region.unregistered");
             }else{
                 MessageUtils.sendMessage(dispatcher, "region.notregistered");
