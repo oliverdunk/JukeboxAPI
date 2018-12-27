@@ -15,6 +15,10 @@ import java.util.Set;
 
 public class RegionProvider implements net.mcjukebox.shared.api.RegionProvider {
 
+    public String getName() {
+        return "wg7";
+    }
+
     public List<Region> getApplicableRegions(Location location) {
         ArrayList regionList = new ArrayList<Region>();
 
