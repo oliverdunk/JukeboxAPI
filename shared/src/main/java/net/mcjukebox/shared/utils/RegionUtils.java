@@ -25,6 +25,10 @@ public class RegionUtils {
             return new net.mcjukebox.shared.wg7.RegionProvider();
         } else {
             return new RegionProvider() {
+                public String getName() {
+                    return null;
+                }
+
                 public List<Region> getApplicableRegions(Location location) {
                     return new ArrayList<Region>();
                 }
