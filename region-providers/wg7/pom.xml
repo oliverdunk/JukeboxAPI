@@ -12,6 +12,14 @@
 
     <artifactId>MCJukebox-region-providers-wg7</artifactId>
 
+    <repositories>
+        <!-- Contains missing bstats dependency -->
+        <repository>
+            <id>CodeMC</id>
+            <url>https://repo.codemc.org/repository/maven-public</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
