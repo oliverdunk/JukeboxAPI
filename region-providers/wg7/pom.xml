@@ -12,14 +12,6 @@
 
     <artifactId>MCJukebox-region-providers-wg7</artifactId>
 
-    <repositories>
-        <!-- Contains missing bstats dependency -->
-        <repository>
-            <id>CodeMC</id>
-            <url>https://repo.codemc.org/repository/maven-public</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -37,7 +29,7 @@
                     <artifactId>bukkit</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.bstats</groupId>
+                    <groupId>org.bstats.bStats-Metrics</groupId>
                     <artifactId>bstats-bukkit</artifactId>
                 </exclusion>
                 <exclusion>
