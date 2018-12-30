@@ -2,7 +2,6 @@ package net.mcjukebox.shared.wg7;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldedit.world.World;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.internal.platform.WorldGuardPlatform;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -25,8 +24,9 @@ public class RegionProvider implements net.mcjukebox.shared.api.RegionProvider {
 
         WorldGuardPlatform platform = WorldGuard.getInstance().getPlatform();
 
-        World world = BukkitAdapter.adapt(location.getWorld());
-        RegionManager regionManager = platform.getRegionContainer().get(world);
+        org.bukkit.World world = location.getWorld();
+        com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(world);
+        RegionManager regionManager = platform.getRegionContainer().get(weWorld);
         org.bukkit.util.Vector bukkitVector = location.toVector();
         BlockVector3 vector = BlockVector3.at(bukkitVector.getX(), bukkitVector.getY(), bukkitVector.getZ());
         Set<ProtectedRegion> regions = regionManager.getApplicableRegions(vector).getRegions();
