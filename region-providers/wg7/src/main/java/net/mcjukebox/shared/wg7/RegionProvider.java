@@ -24,7 +24,7 @@ public class RegionProvider implements net.mcjukebox.shared.api.RegionProvider {
 
         WorldGuardPlatform platform = WorldGuard.getInstance().getPlatform();
 
-        World world = platform.getWorldByName(location.getWorld().getName());
+        World world = platform.getMatcher().getWorldByName(location.getWorld().getName());
         RegionManager regionManager = platform.getRegionContainer().get(world);
         org.bukkit.util.Vector bukkitVector = location.toVector();
         BlockVector3 vector = BlockVector3.at(bukkitVector.getX(), bukkitVector.getY(), bukkitVector.getZ());
