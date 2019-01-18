@@ -27,15 +27,24 @@ public class RegionManager implements Listener {
     }
 
     private void load(){
-        regions = DataUtils.loadObjectFromPath(folder + "/shared.data");
+        regions = DataUtils.loadObjectFromPath(folder + "/regions.data");
         if(regions == null) regions = new HashMap<>();
+
+        // Import from the "shared.data" file we accidentally created
+        HashMap<String, String> sharedFile = DataUtils.loadObjectFromPath(folder + "/shared.data");
+        if (sharedFile != null) {
+            MCJukebox.getInstance().getLogger().info("Running migration of shared.data regions...");
+            for (String key : sharedFile.keySet()) regions.put(key, sharedFile.get(key));
+            new File(folder + "/shared.data").delete();
+            MCJukebox.getInstance().getLogger().info("Migration complete.");
+        }
     }
 
     public int importFromOA() {
         try {
             File configFile = new File("plugins/OpenAudioMc/config.yml");
             YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-            ConfigurationSection regionConfig = config.getConfigurationSection("storage.shared");
+            ConfigurationSection regionConfig = config.getConfigurationSection("storage.regions");
             int added = 0;
             for (String region : regionConfig.getKeys(false)) {
                 String url = regionConfig.getString(region + ".src");
@@ -51,7 +60,7 @@ public class RegionManager implements Listener {
     }
 
     public void save(){
-        DataUtils.saveObjectToPath(regions, folder + "/shared.data");
+        DataUtils.saveObjectToPath(regions, folder + "/regions.data");
     }
 
     public void addRegion(String ID, String URL){
