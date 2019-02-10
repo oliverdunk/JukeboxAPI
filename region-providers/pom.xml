@@ -7,12 +7,12 @@
     <parent>
         <groupId>com.oliverdunk</groupId>
         <artifactId>MCJukebox</artifactId>
-        <version>2.6.1-RELEASE</version>
+        <version>2.6.2-RELEASE</version>
     </parent>
 
     <artifactId>MCJukebox-region-providers</artifactId>
     <packaging>pom</packaging>
-    <version>2.6.1-RELEASE</version>
+    <version>2.6.2-RELEASE</version>
 
     <modules>
         <module>api</module>
