@@ -82,7 +82,7 @@ public class RegionManager implements Listener {
                     showManager.getShow(regions.get(ID)).removeMember(Bukkit.getPlayer(uuid));
                 } else {
                     JukeboxAPI.stopMusic(Bukkit.getPlayer(uuid));
-                    playersInRegion.remove(uuid);
+                    keys.remove();
                 }
             }
         }
