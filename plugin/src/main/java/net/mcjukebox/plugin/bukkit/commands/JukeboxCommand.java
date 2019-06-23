@@ -104,7 +104,7 @@ public abstract class JukeboxCommand {
         matcher.find();
         int radius = Integer.parseInt(matcher.group(1));
 
-        return from.distanceSquared(target.getLocation()) <= radius;
+        return from.distance(target.getLocation()) <= radius;
     }
 
     protected JSONObject jsonFromArgs(String[] args, int startPoint) {
