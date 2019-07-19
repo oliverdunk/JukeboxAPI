@@ -12,6 +12,7 @@ public class ClientConnectEvent extends Event {
 	@Getter private long timestamp;
 
 	public ClientConnectEvent(String username, long timestamp) {
+		super(true);
 		this.username = username;
 		this.timestamp = timestamp;
 	}

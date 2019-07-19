@@ -12,6 +12,7 @@ public class ClientDisconnectEvent extends Event {
 	@Getter private long timestamp;
 
 	public ClientDisconnectEvent(String username, long timestamp) {
+		super(true);
 		this.username = username;
 		this.timestamp = timestamp;
 	}
