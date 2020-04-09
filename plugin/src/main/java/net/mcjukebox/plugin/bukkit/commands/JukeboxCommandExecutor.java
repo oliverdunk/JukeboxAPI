@@ -75,7 +75,7 @@ public class JukeboxCommandExecutor implements CommandExecutor {
         sender.sendMessage("/jukebox stop <music/all> <username/@show> {options}");
         sender.sendMessage("/jukebox region add <id> <url/@show>");
         sender.sendMessage("/jukebox region remove <id>");
-        sender.sendMessage("/jukebox region list");
+        sender.sendMessage("/jukebox region list <page>");
         sender.sendMessage("/jukebox show add/remove <username> <@show>");
         sender.sendMessage("/jukebox setkey <apikey>");
         sender.sendMessage("/jukebox import <src>");

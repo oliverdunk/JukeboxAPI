@@ -6,6 +6,7 @@ import net.mcjukebox.plugin.bukkit.managers.RegionManager;
 import net.mcjukebox.plugin.bukkit.utils.MessageUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import java.util.ArrayList;
 
 @AllArgsConstructor
 public class RegionCommand extends JukeboxCommand {
@@ -33,12 +34,24 @@ public class RegionCommand extends JukeboxCommand {
         }
 
         // region list
-        if(args.length == 1 && args[0].equalsIgnoreCase("list")) {
-            dispatcher.sendMessage(ChatColor.GREEN + "Registered Regions (" + regionManager.getRegions().size() + "):");
-            for(String region : regionManager.getRegions().keySet()) {
-                dispatcher.sendMessage("");
+        if((args.length == 1 || args.length == 2) && args[0].equalsIgnoreCase("list")) {
+            int nbRegions = regionManager.getRegions().size();
+            int nbPerPage = 5;
+            int nbPages = (nbRegions - 1) / nbPerPage + 1;
+            int page = 1;
+            if (args.length == 2) {
+                page = Integer.parseInt(args[1]);
+                if (page > nbPages) {
+                    return false;
+                }
+            }
+            dispatcher.sendMessage(ChatColor.GREEN + "Registered Regions " + page + "/" + nbPages + " (" + regionManager.getRegions().size() + "):");
+            ArrayList<String> regions = new ArrayList<String>(regionManager.getRegions().keySet());
+            for (int i = (page-1)*nbPerPage; i < page*nbPerPage && i < nbRegions; i++) {
+                String region = regions.get(i);
                 dispatcher.sendMessage(ChatColor.GOLD + "Name: " + ChatColor.WHITE + region);
                 dispatcher.sendMessage(ChatColor.GOLD + "URL/Show: " + ChatColor.WHITE + regionManager.getRegions().get(region));
+                dispatcher.sendMessage("");
             }
             return true;
         }
