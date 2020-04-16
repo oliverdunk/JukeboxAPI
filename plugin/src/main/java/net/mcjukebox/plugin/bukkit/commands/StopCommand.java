@@ -14,6 +14,7 @@ public class StopCommand extends JukeboxCommand {
 
     @Override
     public boolean execute(CommandSender dispatcher, String[] args) {
+        if (args.length == 0) return false;
         JSONObject options = new JSONObject();
 
         if (args.length >= 3) {
@@ -23,10 +24,6 @@ public class StopCommand extends JukeboxCommand {
                 dispatcher.sendMessage(ChatColor.RED + "Unable to parse options as JSON.");
                 return true;
             }
-        }
-
-        if (args.length == 0) {
-            return false;
         }
 
         int fadeDuration = options.has("fadeDuration") ? options.getInt("fadeDuration") : -1;
