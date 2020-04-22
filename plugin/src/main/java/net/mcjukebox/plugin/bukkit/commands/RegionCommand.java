@@ -40,7 +40,10 @@ public class RegionCommand extends JukeboxCommand {
             int nbPages = (nbRegions - 1) / nbPerPage + 1;
             int page = 1;
             if (args.length == 2) {
-                page = Integer.parseInt(args[1]);
+                try {
+                    page = Integer.parseInt(args[1]);
+                } catch (NumberFormatException e) {}
+                    
                 if (page > nbPages) {
                     return false;
                 }
