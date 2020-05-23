@@ -14,12 +14,13 @@ public class StopCommand extends JukeboxCommand {
 
     @Override
     public boolean execute(CommandSender dispatcher, String[] args) {
+        if (args.length == 0) return false;
         JSONObject options = new JSONObject();
 
         if (args.length >= 3) {
             options = jsonFromArgs(args, 2);
 
-            if(options == null) {
+            if (options == null) {
                 dispatcher.sendMessage(ChatColor.RED + "Unable to parse options as JSON.");
                 return true;
             }
