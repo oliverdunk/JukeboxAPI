@@ -11,19 +11,21 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class RegionCommand extends JukeboxCommand {
 
+    private static final int REGIONS_PER_PAGE = 5;
+
     private RegionManager regionManager;
 
     @Override
     public boolean execute(CommandSender dispatcher, String[] args) {
         // region add <id> <url>
-        if(args.length == 3 && args[0].equalsIgnoreCase("add")){
+        if (args.length == 3 && args[0].equalsIgnoreCase("add")){
             MCJukebox.getInstance().getRegionManager().addRegion(args[1], args[2]);
             MessageUtils.sendMessage(dispatcher, "region.registered");
             return true;
         }
 
         // region remove <id>
-        if(args.length == 2 && args[0].equalsIgnoreCase("remove")){
+        if (args.length == 2 && args[0].equalsIgnoreCase("remove")){
             if(MCJukebox.getInstance().getRegionManager().hasRegion(args[1])){
                 MCJukebox.getInstance().getRegionManager().removeRegion(args[1]);
                 MessageUtils.sendMessage(dispatcher, "region.unregistered");
@@ -34,28 +36,39 @@ public class RegionCommand extends JukeboxCommand {
         }
 
         // region list
-        if((args.length == 1 || args.length == 2) && args[0].equalsIgnoreCase("list")) {
-            int nbRegions = regionManager.getRegions().size();
-            int nbPerPage = 5;
-            int nbPages = (nbRegions - 1) / nbPerPage + 1;
+        if ((args.length == 1 || args.length == 2) && args[0].equalsIgnoreCase("list")) {
+            ArrayList<String> regions = new ArrayList<String>(regionManager.getRegions().keySet());
+
+            int pageCount = (regions.size() - 1) / REGIONS_PER_PAGE + 1;
+
             int page = 1;
             if (args.length == 2) {
                 try {
                     page = Integer.parseInt(args[1]);
                 } catch (NumberFormatException e) {}
                     
-                if (page > nbPages) {
+                if (page > pageCount) {
                     return false;
                 }
             }
-            dispatcher.sendMessage(ChatColor.GREEN + "Registered Regions " + page + "/" + nbPages + " (" + regionManager.getRegions().size() + "):");
-            ArrayList<String> regions = new ArrayList<String>(regionManager.getRegions().keySet());
-            for (int i = (page-1)*nbPerPage; i < page*nbPerPage && i < nbRegions; i++) {
+
+            dispatcher.sendMessage(ChatColor.GREEN + "Registered Regions (Page " + page + "/" + pageCount + "):");
+            dispatcher.sendMessage("");
+
+            for (int i = (page-1) * REGIONS_PER_PAGE; i < page * REGIONS_PER_PAGE && i < regions.size(); i++) {
                 String region = regions.get(i);
                 dispatcher.sendMessage(ChatColor.GOLD + "Name: " + ChatColor.WHITE + region);
                 dispatcher.sendMessage(ChatColor.GOLD + "URL/Show: " + ChatColor.WHITE + regionManager.getRegions().get(region));
-                dispatcher.sendMessage("");
+
+                if (i != regions.size() - 1) {
+                    dispatcher.sendMessage("");
+                }
             }
+
+            if (page < pageCount) {
+                dispatcher.sendMessage(ChatColor.GRAY + "Type '/jukebox region list " + (page + 1) + "' to see more...");
+            }
+
             return true;
         }
 
