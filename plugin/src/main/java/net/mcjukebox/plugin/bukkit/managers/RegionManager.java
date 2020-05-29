@@ -8,6 +8,7 @@ import net.mcjukebox.plugin.bukkit.utils.DataUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import java.io.File;
@@ -78,10 +79,13 @@ public class RegionManager implements Listener {
             String regionID = playersInRegion.get(uuid);
 
             if (regionID.equals(ID)) {
+                Player player = Bukkit.getPlayer(uuid);
+                if (player == null) continue;
+
                 if (regions.get(ID).charAt(0) == '@') {
-                    showManager.getShow(regions.get(ID)).removeMember(Bukkit.getPlayer(uuid));
+                    showManager.getShow(regions.get(ID)).removeMember(player);
                 } else {
-                    JukeboxAPI.stopMusic(Bukkit.getPlayer(uuid));
+                    JukeboxAPI.stopMusic(player);
                     keys.remove();
                 }
             }
