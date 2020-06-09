@@ -1,2 +1,0 @@
-curl -O -L https://github.com/SkriptLang/Skript/releases/download/2.3-beta1/Skript.jar
-mvn install:install-file -Dfile=Skript.jar -DgroupId=com.github.SkriptLang -DartifactId=Skript -Dversion=2.3-beta1 -Dpackaging=jar
