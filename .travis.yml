@@ -2,8 +2,6 @@ language: java
 dist: trusty
 jdk:
 - openjdk8
-before_install:
-  - ./scripts/installSkript.sh
 deploy:
   provider: releases
   skip_cleanup: true

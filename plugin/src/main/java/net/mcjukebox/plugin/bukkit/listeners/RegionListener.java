@@ -39,7 +39,7 @@ public class RegionListener implements Listener {
         if (from != null
                 && from.getBlockX() == to.getBlockX()
                 && from.getBlockY() == to.getBlockY()
-                && from.getBlockZ() != to.getBlockZ()) return;
+                && from.getBlockZ() == to.getBlockZ()) return;
 
         int highestPriority = -1;
         String highestRegion = null;
