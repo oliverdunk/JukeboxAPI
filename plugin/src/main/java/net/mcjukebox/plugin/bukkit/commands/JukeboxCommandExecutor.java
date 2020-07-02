@@ -93,13 +93,9 @@ public class JukeboxCommandExecutor implements TabExecutor {
         // Suggest the main sub commands
         if (args.length == 1) {
             suggestions.add("help");
-            suggestions.add("music");
-            suggestions.add("sound");
-            suggestions.add("stop");
-            suggestions.add("region");
-            suggestions.add("show");
-            suggestions.add("setkey");
-            suggestions.add("import");
+            for (String cmd : commands.keySet()) {
+                suggestions.add(cmd);
+            }
             return suggestions;
         }
 
