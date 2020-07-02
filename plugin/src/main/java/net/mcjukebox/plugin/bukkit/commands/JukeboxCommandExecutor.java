@@ -4,18 +4,22 @@ import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.api.JukeboxAPI;
 import net.mcjukebox.plugin.bukkit.api.ResourceType;
 import net.mcjukebox.plugin.bukkit.managers.RegionManager;
+import net.mcjukebox.plugin.bukkit.managers.shows.Show;
+import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
 import net.mcjukebox.plugin.bukkit.utils.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
-public class JukeboxCommandExecutor implements CommandExecutor {
+public class JukeboxCommandExecutor implements TabExecutor {
 
     private HashMap<String, JukeboxCommand> commands = new HashMap<String, JukeboxCommand>();
 
@@ -82,4 +86,126 @@ public class JukeboxCommandExecutor implements CommandExecutor {
         return true;
     }
 
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        // Create an empty suggestion list. If no suggestions are added, player gets no suggestions.
+        List<String> suggestions = new ArrayList<>();
+
+        // Suggest the main sub commands
+        if (args.length == 1) {
+            suggestions.add("help");
+            suggestions.add("music");
+            suggestions.add("sound");
+            suggestions.add("stop");
+            suggestions.add("region");
+            suggestions.add("show");
+            suggestions.add("setkey");
+            suggestions.add("import");
+            return suggestions;
+        }
+
+        // Suggest values for sub commands
+        if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("music") || args[0].equalsIgnoreCase("sound") || args[0].equalsIgnoreCase("stop")) {
+                for (String suggestion : getOnlinePlayers()) {
+                    suggestions.add(suggestion);
+                }
+                for (String suggestion : getExistingShows()) {
+                    suggestions.add(suggestion);
+                }
+
+                if (args[0].equalsIgnoreCase("stop")) {
+                    suggestions.add("music");
+                    suggestions.add("all");
+                }
+            }
+
+            else if (args[0].equals("region")) {
+                suggestions.add("add");
+                suggestions.add("remove");
+                suggestions.add("list");
+            }
+
+            else if (args[0].equals("show")) {
+                suggestions.add("add");
+                suggestions.add("remove");
+            }
+            return suggestions;
+        }
+
+        if (args.length == 3) {
+            if (args[0].equalsIgnoreCase("stop")) {
+                if (args[1].equalsIgnoreCase("music") || args[1].equalsIgnoreCase("all")) {
+                    for (String suggestion : getOnlinePlayers()) {
+                        suggestions.add(suggestion);
+                    }
+                    for (String suggestion : getExistingShows()) {
+                        suggestions.add(suggestion);
+                    }
+                }
+            }
+
+            else if (args[0].equalsIgnoreCase("region")) {
+                // Suggesting registered regions for removal. Didn't find a way to get existing regions from WorldGuard,
+                // so no suggestions on region add
+                if (args[1].equalsIgnoreCase("remove")) {
+                    for (String suggestion : getExistingRegions()) {
+                        suggestions.add(suggestion);
+                    }
+                }
+            }
+
+            else if (args[0].equalsIgnoreCase("show")) {
+                if (args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("remove")) {
+                    for (String suggestion : getOnlinePlayers()) {
+                        suggestions.add(suggestion);
+                    }
+                }
+            }
+            return suggestions;
+        }
+
+        if (args.length == 4) {
+            if (args[0].equalsIgnoreCase("region") && args[1].equalsIgnoreCase("add")) {
+                for (String suggestion : getExistingShows()) {
+                    suggestions.add(suggestion);
+                }
+            }
+
+            else if (args[0].equalsIgnoreCase("show")) {
+                if (args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("remove")) {
+                    for (String suggestion : getExistingShows()) {
+                        suggestions.add(suggestion);
+                    }
+                }
+            }
+        }
+
+        return suggestions;
+    }
+
+    private List<String> getOnlinePlayers() {
+        List<String> suggestions = new ArrayList<>();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            suggestions.add(player.getName());
+        }
+        return suggestions;
+    }
+
+    private List<String> getExistingShows() {
+        List<String> suggestions = new ArrayList<>();
+        HashMap<String, Show> shows = MCJukebox.getInstance().getShowManager().getShows();
+        for (String show : shows.keySet()) {
+            suggestions.add("@" + show);
+        }
+        return suggestions;
+    }
+
+    private List<String> getExistingRegions() {
+        List<String> suggestions = new ArrayList<>();
+        HashMap<String, String> regions = MCJukebox.getInstance().getRegionManager().getRegions();
+        for (String region : regions.keySet()) {
+            suggestions.add(region);
+        }
+        return suggestions;
+    }
 }
