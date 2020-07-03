@@ -18,9 +18,7 @@ public class PlayCommand extends JukeboxCommand {
 
     public PlayCommand(ResourceType type) {
         this.type = type;
-        suggestions = new HashMap<Integer, TabArgument>() {{
-            put(0, new PlayerOrShowTabArgument(new String[] {}));
-        }};
+        suggestions.put(0, new PlayerOrShowTabArgument(new String[] {}));
     }
 
     @Override

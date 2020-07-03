@@ -28,28 +28,34 @@ class StringTabArgument extends TabArgument {
 
 class RegionTabArgument extends TabArgument {
 
-    public RegionTabArgument() {
+    @Override
+    public List<String> getSuggestions() {
         HashMap<String, String> regions = MCJukebox.getInstance().getRegionManager().getRegions();
         suggestions.addAll(regions.keySet());
+        return this.suggestions;
     }
 }
 
 class PlayerTabArgument extends TabArgument {
 
-    public PlayerTabArgument() {
+    @Override
+    public List<String> getSuggestions() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             suggestions.add(player.getName());
         }
+        return this.suggestions;
     }
 }
 
 class ShowTabArgument extends TabArgument {
 
-    public ShowTabArgument() {
+    @Override
+    public List<String> getSuggestions() {
         HashMap<String, Show> shows = MCJukebox.getInstance().getShowManager().getShows();
         for (String show : shows.keySet()) {
             suggestions.add("@" + show);
         }
+        return this.suggestions;
     }
 }
 
@@ -57,6 +63,10 @@ class PlayerOrShowTabArgument extends TabArgument {
 
     public PlayerOrShowTabArgument(String[] customSuggestions) {
         suggestions.addAll(Arrays.asList(customSuggestions));
+    }
+
+    @Override
+    public List<String> getSuggestions() {
         HashMap<String, Show> shows = MCJukebox.getInstance().getShowManager().getShows();
         for (String show : shows.keySet()) {
             suggestions.add("@" + show);
@@ -64,5 +74,6 @@ class PlayerOrShowTabArgument extends TabArgument {
         for (Player player : Bukkit.getOnlinePlayers()) {
             suggestions.add(player.getName());
         }
+        return this.suggestions;
     }
 }

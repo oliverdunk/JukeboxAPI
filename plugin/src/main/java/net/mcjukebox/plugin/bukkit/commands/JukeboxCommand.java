@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public abstract class JukeboxCommand {
 
     private final String SELECTOR_REGEX = "@[ap]\\[r=([0-9]{1,4})\\]";
-    protected HashMap<Integer, TabArgument> suggestions;
+    protected HashMap<Integer, TabArgument> suggestions = new HashMap<>();
 
     public abstract boolean execute(CommandSender dispatcher, String[] args);
 
