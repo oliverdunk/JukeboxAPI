@@ -13,15 +13,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class JukeboxCommandExecutor implements TabExecutor {
 
-    private HashMap<String, JukeboxCommand> commands = new HashMap<String, JukeboxCommand>();
+    private HashMap<String, JukeboxCommand> commands = new HashMap<>();
 
     public JukeboxCommandExecutor(RegionManager regionManager) {
         commands.put("music", new PlayCommand(ResourceType.MUSIC));
@@ -87,121 +85,28 @@ public class JukeboxCommandExecutor implements TabExecutor {
     }
 
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        // Create an empty suggestion list. If no suggestions are added, player gets no suggestions.
+        // Create an empty suggestion list. If no suggestions are added, return empty list.
         List<String> suggestions = new ArrayList<>();
 
         // Suggest the main sub commands
         if (args.length == 1) {
             suggestions.add("help");
-            for (String cmd : commands.keySet()) {
-                suggestions.add(cmd);
-            }
-            return suggestions;
+            suggestions.addAll(commands.keySet());
+            return StringUtil.copyPartialMatches(args[0], suggestions, new ArrayList<String>());
         }
 
         // Suggest values for sub commands
-        if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("music") || args[0].equalsIgnoreCase("sound") || args[0].equalsIgnoreCase("stop")) {
-                for (String suggestion : getOnlinePlayers()) {
-                    suggestions.add(suggestion);
-                }
-                for (String suggestion : getExistingShows()) {
-                    suggestions.add(suggestion);
-                }
-
-                if (args[0].equalsIgnoreCase("stop")) {
-                    suggestions.add("music");
-                    suggestions.add("all");
+        else if (args.length > 1) {
+            Integer argumentIndex = args.length - 2;
+            if (commands.get(args[0]) != null) {
+                JukeboxCommand cmd = commands.get(args[0]);
+                if (cmd.getSuggestions().get(argumentIndex) != null) {
+                    suggestions.addAll(cmd.getSuggestions().get(argumentIndex).getSuggestions());
                 }
             }
-
-            else if (args[0].equals("region")) {
-                suggestions.add("add");
-                suggestions.add("remove");
-                suggestions.add("list");
-            }
-
-            else if (args[0].equals("show")) {
-                suggestions.add("add");
-                suggestions.add("remove");
-            }
-            return suggestions;
+            return StringUtil.copyPartialMatches(args[args.length - 1], suggestions, new ArrayList<String>());
         }
 
-        if (args.length == 3) {
-            if (args[0].equalsIgnoreCase("stop")) {
-                if (args[1].equalsIgnoreCase("music") || args[1].equalsIgnoreCase("all")) {
-                    for (String suggestion : getOnlinePlayers()) {
-                        suggestions.add(suggestion);
-                    }
-                    for (String suggestion : getExistingShows()) {
-                        suggestions.add(suggestion);
-                    }
-                }
-            }
-
-            else if (args[0].equalsIgnoreCase("region")) {
-                // Suggesting registered regions for removal. Didn't find a way to get existing regions from WorldGuard,
-                // so no suggestions on region add
-                if (args[1].equalsIgnoreCase("remove")) {
-                    for (String suggestion : getExistingRegions()) {
-                        suggestions.add(suggestion);
-                    }
-                }
-            }
-
-            else if (args[0].equalsIgnoreCase("show")) {
-                if (args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("remove")) {
-                    for (String suggestion : getOnlinePlayers()) {
-                        suggestions.add(suggestion);
-                    }
-                }
-            }
-            return suggestions;
-        }
-
-        if (args.length == 4) {
-            if (args[0].equalsIgnoreCase("region") && args[1].equalsIgnoreCase("add")) {
-                for (String suggestion : getExistingShows()) {
-                    suggestions.add(suggestion);
-                }
-            }
-
-            else if (args[0].equalsIgnoreCase("show")) {
-                if (args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("remove")) {
-                    for (String suggestion : getExistingShows()) {
-                        suggestions.add(suggestion);
-                    }
-                }
-            }
-        }
-
-        return suggestions;
-    }
-
-    private List<String> getOnlinePlayers() {
-        List<String> suggestions = new ArrayList<>();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            suggestions.add(player.getName());
-        }
-        return suggestions;
-    }
-
-    private List<String> getExistingShows() {
-        List<String> suggestions = new ArrayList<>();
-        HashMap<String, Show> shows = MCJukebox.getInstance().getShowManager().getShows();
-        for (String show : shows.keySet()) {
-            suggestions.add("@" + show);
-        }
-        return suggestions;
-    }
-
-    private List<String> getExistingRegions() {
-        List<String> suggestions = new ArrayList<>();
-        HashMap<String, String> regions = MCJukebox.getInstance().getRegionManager().getRegions();
-        for (String region : regions.keySet()) {
-            suggestions.add(region);
-        }
         return suggestions;
     }
 }
