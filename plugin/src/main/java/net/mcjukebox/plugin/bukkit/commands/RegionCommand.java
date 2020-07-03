@@ -16,7 +16,7 @@ public class RegionCommand extends JukeboxCommand {
 
     public RegionCommand(RegionManager regionManager) {
         this.regionManager = regionManager;
-        suggestions.put(0, new PlayerOrShowTabArgument(new String[] {"add", "remove", "list"}));
+        suggestions.put(0, new StringTabArgument(new String[] {"add", "remove", "list"}));
         suggestions.put(1, new RegionTabArgument());
         suggestions.put(2, new ShowTabArgument());
     }
