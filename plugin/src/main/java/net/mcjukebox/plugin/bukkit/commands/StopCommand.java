@@ -12,6 +12,13 @@ import java.util.HashMap;
 
 public class StopCommand extends JukeboxCommand {
 
+    public StopCommand() {
+        suggestions = new HashMap<Integer, TabArgument>() {{
+            put(0, new PlayerOrShowTabArgument(new String[] {"music", "all"}));
+            put(1, new PlayerOrShowTabArgument(new String[] {}));
+        }};
+    }
+
     @Override
     public boolean execute(CommandSender dispatcher, String[] args) {
         if (args.length == 0) return false;

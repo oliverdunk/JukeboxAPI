@@ -11,6 +11,14 @@ import java.util.HashMap;
 
 public class ShowCommand extends JukeboxCommand {
 
+    public ShowCommand() {
+        suggestions = new HashMap<Integer, TabArgument>() {{
+            put(0, new StringTabArgument(new String[] {"add", "remove"}));
+            put(1, new PlayerTabArgument());
+            put(2, new ShowTabArgument());
+        }};
+    }
+
     @Override
     public boolean execute(CommandSender dispatcher, String[] args) {
         if (args.length != 3) return false;
