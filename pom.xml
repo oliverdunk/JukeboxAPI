@@ -16,6 +16,14 @@
         <module>plugin</module>
     </modules>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub oliverdunk Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/oliverdunk/JukeboxAPI</url>
+        </repository>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>spigot</id>
