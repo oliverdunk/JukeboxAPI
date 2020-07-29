@@ -1,5 +1,5 @@
 name: MCJukebox
-version: 2.6.6
+version: 2.6.7
 api-version: 1.13
 main: net.mcjukebox.plugin.bukkit.MCJukebox
 softdepend: [WorldGuard, Skript]
