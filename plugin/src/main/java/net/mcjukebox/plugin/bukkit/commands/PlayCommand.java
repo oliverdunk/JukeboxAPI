@@ -1,6 +1,5 @@
 package net.mcjukebox.plugin.bukkit.commands;
 
-import lombok.AllArgsConstructor;
 import net.mcjukebox.plugin.bukkit.api.JukeboxAPI;
 import net.mcjukebox.plugin.bukkit.api.ResourceType;
 import net.mcjukebox.plugin.bukkit.api.models.Media;
@@ -13,10 +12,14 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-@AllArgsConstructor
 public class PlayCommand extends JukeboxCommand {
 
     private ResourceType type;
+
+    public PlayCommand(ResourceType type) {
+        this.type = type;
+        suggestions.put(0, new PlayerOrShowTabArgument(new String[] {}));
+    }
 
     @Override
     public boolean execute(CommandSender dispatcher, String[] args) {

@@ -94,6 +94,8 @@ public class RegionManager implements Listener {
         regions.remove(ID);
     }
 
+    public HashMap<String, String> getRegions() { return this.regions; }
+
     public boolean hasRegion(String ID){
         return regions.containsKey(ID);
     }

@@ -1,14 +1,16 @@
 package net.mcjukebox.plugin.bukkit.commands;
 
-import lombok.AllArgsConstructor;
 import net.mcjukebox.plugin.bukkit.managers.RegionManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-@AllArgsConstructor
 public class ImportCommand extends JukeboxCommand {
 
     private RegionManager regionManager;
+
+    public ImportCommand(RegionManager regionManager) {
+        this.regionManager = regionManager;
+    }
 
     @Override
     public boolean execute(CommandSender dispatcher, String[] args) {

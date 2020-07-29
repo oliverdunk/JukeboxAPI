@@ -7,13 +7,19 @@ import net.mcjukebox.plugin.bukkit.utils.MessageUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-@AllArgsConstructor
 public class RegionCommand extends JukeboxCommand {
 
     private static final int REGIONS_PER_PAGE = 5;
-
     private RegionManager regionManager;
+
+    public RegionCommand(RegionManager regionManager) {
+        this.regionManager = regionManager;
+        suggestions.put(0, new StringTabArgument(new String[] {"add", "remove", "list"}));
+        suggestions.put(1, new RegionTabArgument());
+        suggestions.put(2, new ShowTabArgument());
+    }
 
     @Override
     public boolean execute(CommandSender dispatcher, String[] args) {

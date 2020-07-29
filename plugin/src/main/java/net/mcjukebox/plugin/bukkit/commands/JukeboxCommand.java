@@ -1,6 +1,5 @@
 package net.mcjukebox.plugin.bukkit.commands;
 
-import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,14 +11,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@AllArgsConstructor
 public abstract class JukeboxCommand {
 
     private final String SELECTOR_REGEX = "@[ap]\\[r=([0-9]{1,4})\\]";
+    protected HashMap<Integer, TabArgument> suggestions = new HashMap<>();
 
     public abstract boolean execute(CommandSender dispatcher, String[] args);
 
@@ -118,4 +118,7 @@ public abstract class JukeboxCommand {
         }
     }
 
+    public HashMap<Integer, TabArgument> getSuggestions() {
+        return this.suggestions;
+    }
 }

@@ -4,20 +4,22 @@ import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.api.JukeboxAPI;
 import net.mcjukebox.plugin.bukkit.api.ResourceType;
 import net.mcjukebox.plugin.bukkit.managers.RegionManager;
+import net.mcjukebox.plugin.bukkit.managers.shows.Show;
+import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
 import net.mcjukebox.plugin.bukkit.utils.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
-public class JukeboxCommandExecutor implements CommandExecutor {
+public class JukeboxCommandExecutor implements TabExecutor {
 
-    private HashMap<String, JukeboxCommand> commands = new HashMap<String, JukeboxCommand>();
+    private HashMap<String, JukeboxCommand> commands = new HashMap<>();
 
     public JukeboxCommandExecutor(RegionManager regionManager) {
         commands.put("music", new PlayCommand(ResourceType.MUSIC));
@@ -82,4 +84,29 @@ public class JukeboxCommandExecutor implements CommandExecutor {
         return true;
     }
 
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        // Create an empty suggestion list. If no suggestions are added, return empty list.
+        List<String> suggestions = new ArrayList<>();
+
+        // Suggest the main sub commands
+        if (args.length == 1) {
+            suggestions.add("help");
+            suggestions.addAll(commands.keySet());
+            return StringUtil.copyPartialMatches(args[0], suggestions, new ArrayList<String>());
+        }
+
+        // Suggest values for sub commands
+        else if (args.length > 1) {
+            Integer argumentIndex = args.length - 2;
+            if (commands.get(args[0]) != null) {
+                JukeboxCommand cmd = commands.get(args[0]);
+                if (cmd.getSuggestions().get(argumentIndex) != null) {
+                    suggestions.addAll(cmd.getSuggestions().get(argumentIndex).getSuggestions());
+                }
+            }
+            return StringUtil.copyPartialMatches(args[args.length - 1], suggestions, new ArrayList<String>());
+        }
+
+        return suggestions;
+    }
 }
