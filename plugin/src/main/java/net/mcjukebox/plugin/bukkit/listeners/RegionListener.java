@@ -52,7 +52,7 @@ public class RegionListener implements Listener{
     @EventHandler
     public void onMove(PlayerMoveEvent e){
         //Only execute if the player moves an entire block
-        if(!(e.getFrom().getX() != e.getTo().getX() || e.getFrom().getZ() != e.getTo().getZ())) return;
+        if(e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()) return;
 
         int highestPriority = -1;
         String highestRegion = null;
