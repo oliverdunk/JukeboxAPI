@@ -46,7 +46,7 @@ public class UrlUtils {
 
         String path = uri.getPath();
         for (String fileType: supportedFiles) {
-            if (path.endsWith(fileType)) {
+            if (path.endsWith("."+fileType)) {
                 return true;
             }
         }
