@@ -4,6 +4,7 @@ import net.mcjukebox.plugin.bukkit.api.JukeboxAPI;
 import net.mcjukebox.plugin.bukkit.api.ResourceType;
 import net.mcjukebox.plugin.bukkit.api.models.Media;
 import net.mcjukebox.plugin.bukkit.utils.MessageUtils;
+import net.mcjukebox.plugin.bukkit.utils.UrlUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -26,6 +27,15 @@ public class PlayCommand extends JukeboxCommand {
         if (args.length < 2) return false;
 
         String url = args[1];
+
+        if(!UrlUtils.isValidURI(url)) {
+            MessageUtils.sendMessage(dispatcher, "command.invalidUrl");
+            return true;
+        }
+        if(!UrlUtils.isDirectMediaFile(url)) {
+            MessageUtils.sendMessage(dispatcher, "command.unexpectedUrl");
+        }
+
         Media toPlay = new Media(type, url);
 
         if (args.length >= 3) {
