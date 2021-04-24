@@ -28,11 +28,12 @@ public class RegionCommand extends JukeboxCommand {
         if (args.length == 3 && args[0].equalsIgnoreCase("add")){
             String url = args[2];
             
-            if(!UrlUtils.isValidURI(url)) {
+            if (!UrlUtils.isValidURI(url)) {
                 MessageUtils.sendMessage(dispatcher, "command.invalidUrl");
                 return true;
             }
-            if(!UrlUtils.isDirectMediaFile(url)) {
+
+            if (!UrlUtils.isDirectMediaFile(url)) {
                 MessageUtils.sendMessage(dispatcher, "command.unexpectedUrl");
             }
 
@@ -43,10 +44,10 @@ public class RegionCommand extends JukeboxCommand {
 
         // region remove <id>
         if (args.length == 2 && args[0].equalsIgnoreCase("remove")){
-            if(MCJukebox.getInstance().getRegionManager().hasRegion(args[1])){
+            if (MCJukebox.getInstance().getRegionManager().hasRegion(args[1])){
                 MCJukebox.getInstance().getRegionManager().removeRegion(args[1]);
                 MessageUtils.sendMessage(dispatcher, "region.unregistered");
-            }else{
+            } else {
                 MessageUtils.sendMessage(dispatcher, "region.notregistered");
             }
             return true;
