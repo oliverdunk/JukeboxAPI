@@ -63,7 +63,7 @@ public class LangManager {
 
 		addDefault("command.notOnline", "&c[user] is not currently online.");
 		addDefault("command.invalidUrl", "&cThe URL you entered is not valid. Please make sure that you entered the complete URL.");
-		addDefault("command.unexpectedUrl", "&6The URL you entered appears to be unsupported. Only direct file URLs are supported. Links to Spotify, YouTube, SoundCloud, etc. won't work.");
+		addDefault("command.unexpectedUrl", "&6Warning: The URL you provided does not have a recognised file extension and may fail to play. Links to files hosted on services like Spotify, YouTube and SoundCloud are unsupported.");
 	}
 
 	/**
