@@ -2,7 +2,6 @@ package net.mcjukebox.plugin.bukkit.utils;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 
 public class UrlUtils {
     private static String[] supportedFiles = {
@@ -18,17 +17,14 @@ public class UrlUtils {
     {
         URI uri;
         try {
-            uri = getUrlWithoutParameters(url);
-            if (uri == null) {
-                return false;
-            }
+            uri = new URI(url);
         } catch (URISyntaxException e) {
             return false;
         }
 
-        if(!uri.isAbsolute()) return false;
-
-        if (!uri.getScheme().equals("http") && !uri.getScheme().equals("https")) return false;
+        if(!uri.isAbsolute() || (!uri.getScheme().equals("http") && !uri.getScheme().equals("https"))) {
+            return false;
+        }
 
         return true;
     }
@@ -36,11 +32,12 @@ public class UrlUtils {
     public static boolean isDirectMediaFile(String url) {
         URI uri;
         try {
-            uri = getUrlWithoutParameters(url);
-            if (uri == null) {
-                return false;
-            }
+            uri = new URI(url);
         } catch (URISyntaxException e) {
+            return false;
+        }
+
+        if (uri.getPath() == null) {
             return false;
         }
 
@@ -51,14 +48,5 @@ public class UrlUtils {
             }
         }
         return false;
-    }
-
-    private static URI getUrlWithoutParameters(String url) throws URISyntaxException {
-        URI uri = new URI(url);
-        return new URI(uri.getScheme(),
-                uri.getAuthority(),
-                uri.getPath(),
-                null, // Ignore the query part of the input url
-                uri.getFragment());
     }
 }
