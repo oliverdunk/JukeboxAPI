@@ -27,14 +27,16 @@ public class RegionCommand extends JukeboxCommand {
         // region add <id> <url>
         if (args.length == 3 && args[0].equalsIgnoreCase("add")){
             String url = args[2];
-            
-            if (!UrlUtils.isValidURI(url)) {
-                MessageUtils.sendMessage(dispatcher, "command.invalidUrl");
-                return true;
-            }
 
-            if (!UrlUtils.isDirectMediaFile(url)) {
-                MessageUtils.sendMessage(dispatcher, "command.unexpectedUrl");
+            if (!url.startsWith("@")) {
+                if (!UrlUtils.isValidURI(url)) {
+                    MessageUtils.sendMessage(dispatcher, "command.invalidUrl");
+                    return true;
+                }
+
+                if (!UrlUtils.isDirectMediaFile(url)) {
+                    MessageUtils.sendMessage(dispatcher, "command.unexpectedUrl");
+                }
             }
 
             MCJukebox.getInstance().getRegionManager().addRegion(args[1], url);
