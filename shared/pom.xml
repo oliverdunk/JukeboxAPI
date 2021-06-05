@@ -6,11 +6,11 @@
 
     <parent>
         <groupId>com.oliverdunk</groupId>
-        <artifactId>MCJukebox</artifactId>
+        <artifactId>mcjukebox</artifactId>
         <version>2.6.8-RELEASE</version>
     </parent>
 
-    <artifactId>MCJukebox-shared</artifactId>
+    <artifactId>mcjukebox-shared</artifactId>
     <version>2.6.8-RELEASE</version>
 
     <repositories>
@@ -23,12 +23,12 @@
     <dependencies>
         <dependency>
             <groupId>com.oliverdunk</groupId>
-            <artifactId>MCJukebox-region-providers-wg6</artifactId>
+            <artifactId>mcjukebox-region-providers-wg6</artifactId>
             <version>2.6.8-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.oliverdunk</groupId>
-            <artifactId>MCJukebox-region-providers-wg7</artifactId>
+            <artifactId>mcjukebox-region-providers-wg7</artifactId>
             <version>2.6.8-RELEASE</version>
         </dependency>
     </dependencies>

@@ -6,11 +6,11 @@
 
     <parent>
         <groupId>com.oliverdunk</groupId>
-        <artifactId>MCJukebox</artifactId>
+        <artifactId>mcjukebox</artifactId>
         <version>2.6.8-RELEASE</version>
     </parent>
 
-    <artifactId>MCJukebox-plugin</artifactId>
+    <artifactId>mcjukebox-plugin</artifactId>
     <version>2.6.8-RELEASE</version>
 
     <repositories>
@@ -27,7 +27,7 @@
     <dependencies>
         <dependency>
             <groupId>com.oliverdunk</groupId>
-            <artifactId>MCJukebox-shared</artifactId>
+            <artifactId>mcjukebox-shared</artifactId>
             <version>2.6.8-RELEASE</version>
         </dependency>
         <dependency>
