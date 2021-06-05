@@ -62,6 +62,8 @@ public class LangManager {
 		addDefault("event.clientDisconnect", "&cYou disconnected from our audio server.");
 
 		addDefault("command.notOnline", "&c[user] is not currently online.");
+		addDefault("command.invalidUrl", "&cThe URL you entered is not valid. Please make sure that you entered the complete URL.");
+		addDefault("command.unexpectedUrl", "&6Warning: The URL you provided does not have a recognised file extension and may fail to play. Links to files hosted on services like Spotify, YouTube and SoundCloud are unsupported.");
 	}
 
 	/**

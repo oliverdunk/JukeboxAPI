@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.managers.RegionManager;
 import net.mcjukebox.plugin.bukkit.utils.MessageUtils;
+import net.mcjukebox.plugin.bukkit.utils.UrlUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
@@ -25,17 +26,30 @@ public class RegionCommand extends JukeboxCommand {
     public boolean execute(CommandSender dispatcher, String[] args) {
         // region add <id> <url>
         if (args.length == 3 && args[0].equalsIgnoreCase("add")){
-            MCJukebox.getInstance().getRegionManager().addRegion(args[1], args[2]);
+            String url = args[2];
+
+            if (!url.startsWith("@")) {
+                if (!UrlUtils.isValidURI(url)) {
+                    MessageUtils.sendMessage(dispatcher, "command.invalidUrl");
+                    return true;
+                }
+
+                if (!UrlUtils.isDirectMediaFile(url)) {
+                    MessageUtils.sendMessage(dispatcher, "command.unexpectedUrl");
+                }
+            }
+
+            MCJukebox.getInstance().getRegionManager().addRegion(args[1], url);
             MessageUtils.sendMessage(dispatcher, "region.registered");
             return true;
         }
 
         // region remove <id>
         if (args.length == 2 && args[0].equalsIgnoreCase("remove")){
-            if(MCJukebox.getInstance().getRegionManager().hasRegion(args[1])){
+            if (MCJukebox.getInstance().getRegionManager().hasRegion(args[1])){
                 MCJukebox.getInstance().getRegionManager().removeRegion(args[1]);
                 MessageUtils.sendMessage(dispatcher, "region.unregistered");
-            }else{
+            } else {
                 MessageUtils.sendMessage(dispatcher, "region.notregistered");
             }
             return true;
