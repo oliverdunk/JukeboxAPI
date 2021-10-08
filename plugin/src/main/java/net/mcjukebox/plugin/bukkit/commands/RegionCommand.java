@@ -1,6 +1,5 @@
 package net.mcjukebox.plugin.bukkit.commands;
 
-import lombok.AllArgsConstructor;
 import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.managers.RegionManager;
 import net.mcjukebox.plugin.bukkit.utils.MessageUtils;
@@ -8,7 +7,6 @@ import net.mcjukebox.plugin.bukkit.utils.UrlUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class RegionCommand extends JukeboxCommand {
 
@@ -24,8 +22,8 @@ public class RegionCommand extends JukeboxCommand {
 
     @Override
     public boolean execute(CommandSender dispatcher, String[] args) {
-        // region add <id> <url>
-        if (args.length == 3 && args[0].equalsIgnoreCase("add")){
+        // region add <id> <url> [<volume>]
+        if (args.length >= 3 && args[0].equalsIgnoreCase("add")){
             String url = args[2];
 
             if (!url.startsWith("@")) {
@@ -38,8 +36,11 @@ public class RegionCommand extends JukeboxCommand {
                     MessageUtils.sendMessage(dispatcher, "command.unexpectedUrl");
                 }
             }
-
-            MCJukebox.getInstance().getRegionManager().addRegion(args[1], url);
+            int volume = 100;
+            if(args[3] != null) {
+                volume = Integer.parseInt(args[3]);
+            }
+            MCJukebox.getInstance().getRegionManager().addRegion(args[1], url, volume);
             MessageUtils.sendMessage(dispatcher, "region.registered");
             return true;
         }
@@ -78,7 +79,8 @@ public class RegionCommand extends JukeboxCommand {
             for (int i = (page-1) * REGIONS_PER_PAGE; i < page * REGIONS_PER_PAGE && i < regions.size(); i++) {
                 String region = regions.get(i);
                 dispatcher.sendMessage(ChatColor.GOLD + "Name: " + ChatColor.WHITE + region);
-                dispatcher.sendMessage(ChatColor.GOLD + "URL/Show: " + ChatColor.WHITE + regionManager.getRegions().get(region));
+                dispatcher.sendMessage(ChatColor.GOLD + "URL/Show: " + ChatColor.WHITE + regionManager.getRegions().get(region).getURL());
+                dispatcher.sendMessage(ChatColor.GOLD + "Volume: " + ChatColor.WHITE + regionManager.getRegions().get(region).getVolume());
 
                 if (i != regions.size() - 1) {
                     dispatcher.sendMessage("");

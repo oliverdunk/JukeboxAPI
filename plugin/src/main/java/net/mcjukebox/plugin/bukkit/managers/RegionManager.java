@@ -5,6 +5,7 @@ import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.api.JukeboxAPI;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
 import net.mcjukebox.plugin.bukkit.utils.DataUtils;
+import net.mcjukebox.plugin.bukkit.managers.objects.RegionExtended;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,7 +20,7 @@ import java.util.UUID;
 public class RegionManager implements Listener {
 
     @Getter
-    private HashMap<String, String> regions;
+    private HashMap<String, RegionExtended> regions;
     private String folder;
 
     public RegionManager(){
@@ -28,15 +29,22 @@ public class RegionManager implements Listener {
     }
 
     private void load(){
-        regions = DataUtils.loadObjectFromPath(folder + "/regions.data");
+        regions = DataUtils.loadObjectFromPath(folder + "/regionsextended.data");
         if(regions == null) regions = new HashMap<>();
 
         // Import from the "shared.data" file we accidentally created
-        HashMap<String, String> sharedFile = DataUtils.loadObjectFromPath(folder + "/shared.data");
+        HashMap<String, RegionExtended> sharedFile = DataUtils.loadObjectFromPath(folder + "/shared.data");
         if (sharedFile != null) {
             MCJukebox.getInstance().getLogger().info("Running migration of shared.data regions...");
             for (String key : sharedFile.keySet()) regions.put(key, sharedFile.get(key));
             new File(folder + "/shared.data").delete();
+            MCJukebox.getInstance().getLogger().info("Migration complete.");
+        }
+        HashMap<String, String> regionFile = DataUtils.loadObjectFromPath(folder + "/regions.data");
+        if (sharedFile != null) {
+            MCJukebox.getInstance().getLogger().info("Running migration of non extended region file...");
+            for (String key : regionFile.keySet()) regions.put(key, new RegionExtended(regionFile.get(key), 100));
+            new File(folder + "/regions.data").delete();
             MCJukebox.getInstance().getLogger().info("Migration complete.");
         }
     }
@@ -50,7 +58,7 @@ public class RegionManager implements Listener {
             for (String region : regionConfig.getKeys(false)) {
                 String url = regionConfig.getString(region + ".src");
                 if (url.length() > 0 && !url.contains(" ")) {
-                    regions.put(region.toLowerCase(), url);
+                    regions.put(region.toLowerCase(), new RegionExtended(url, 100));
                     added++;
                 }
             }
@@ -64,8 +72,8 @@ public class RegionManager implements Listener {
         DataUtils.saveObjectToPath(regions, folder + "/regions.data");
     }
 
-    public void addRegion(String ID, String URL){
-        regions.put(ID.toLowerCase(), URL);
+    public void addRegion(String ID, String URL, int volume){
+        regions.put(ID.toLowerCase(), new RegionExtended(URL,volume));
     }
 
     public void removeRegion(String ID){
@@ -82,8 +90,8 @@ public class RegionManager implements Listener {
                 Player player = Bukkit.getPlayer(uuid);
                 if (player == null) continue;
 
-                if (regions.get(ID).charAt(0) == '@') {
-                    showManager.getShow(regions.get(ID)).removeMember(player);
+                if (regions.get(ID).getURL().charAt(0) == '@') {
+                    showManager.getShow(regions.get(ID).getURL()).removeMember(player);
                 } else {
                     JukeboxAPI.stopMusic(player);
                     keys.remove();
@@ -94,14 +102,18 @@ public class RegionManager implements Listener {
         regions.remove(ID);
     }
 
-    public HashMap<String, String> getRegions() { return this.regions; }
+    public HashMap<String, RegionExtended> getRegions() { return this.regions; }
 
     public boolean hasRegion(String ID){
         return regions.containsKey(ID);
     }
 
     public String getURL(String ID){
-        return regions.get(ID);
+        return regions.get(ID).getURL();
+    }
+
+    public int getVolume(String ID){
+        return regions.get(ID).getVolume();
     }
 
 }

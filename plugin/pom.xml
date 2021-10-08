@@ -115,7 +115,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>com.oliverdunk</include>
-                                    <include>io.socket</include>
+                                    <include>io.socket*</include>
                                     <include>com.squareup.*</include>
                                     <include>net.kyori</include>
                                     <include>org.json</include>
