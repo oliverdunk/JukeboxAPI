@@ -1,5 +1,7 @@
 package net.mcjukebox.plugin.bukkit;
 
+import lombok.NonNull;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.mcjukebox.plugin.bukkit.managers.skript.SkriptManager;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowSyncTask;
 import net.mcjukebox.plugin.bukkit.sockets.SocketHandler;
@@ -29,11 +31,21 @@ public class MCJukebox extends JavaPlugin {
     @Getter private ShowManager showManager;
     @Getter private TimeUtils timeUtils;
 
+
+    private BukkitAudiences adventure;
+
+    public @NonNull BukkitAudiences adventure() {
+        if(this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
+    }
     /**
      * Called when the plugin is first loaded by Spigot.
      */
     public void onEnable(){
         this.instance = this;
+        this.adventure = BukkitAudiences.create(this);
 
         langManager = new LangManager();
         MessageUtils.setLangManager(langManager);
@@ -71,6 +83,10 @@ public class MCJukebox extends JavaPlugin {
     public void onDisable(){
         socketHandler.disconnect();
         regionManager.save();
+        if(this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
+        }
     }
 
 }
