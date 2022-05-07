@@ -49,6 +49,12 @@ public class StopCommand extends JukeboxCommand {
         }
 
         // We haven't encountered either show case, so assume a player is the target
+
+        if (args.length == 1) {
+            // We weren't provided a player name
+            return false;
+        }
+
         Player target = Bukkit.getPlayer(args[targetIndex]);
 
         if (target == null) {
