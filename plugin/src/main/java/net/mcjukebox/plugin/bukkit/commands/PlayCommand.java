@@ -24,7 +24,7 @@ public class PlayCommand extends JukeboxCommand {
 
     @Override
     public boolean execute(CommandSender dispatcher, String[] args) {
-        if (args.length < 2) return false;
+    if (args.length < 2) return false;    if (args.length < 2) return false;
 
         String url = args[1];
 

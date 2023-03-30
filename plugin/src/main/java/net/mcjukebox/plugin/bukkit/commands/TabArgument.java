@@ -2,6 +2,7 @@ package net.mcjukebox.plugin.bukkit.commands;
 
 import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.managers.shows.Show;
+import net.mcjukebox.plugin.bukkit.managers.objects.RegionExtended;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -30,7 +31,7 @@ class RegionTabArgument extends TabArgument {
 
     @Override
     public List<String> getSuggestions() {
-        HashMap<String, String> regions = MCJukebox.getInstance().getRegionManager().getRegions();
+        HashMap<String, RegionExtended> regions = MCJukebox.getInstance().getRegionManager().getRegions();
         suggestions.addAll(regions.keySet());
         return this.suggestions;
     }

@@ -1,12 +1,14 @@
 package net.mcjukebox.plugin.bukkit;
 
+import lombok.NonNull;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.mcjukebox.plugin.bukkit.managers.skript.SkriptManager;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowSyncTask;
 import net.mcjukebox.plugin.bukkit.sockets.SocketHandler;
 import net.mcjukebox.plugin.bukkit.commands.JukeboxCommandExecutor;
 import net.mcjukebox.plugin.bukkit.listeners.RegionListener;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
-import net.mcjukebox.plugin.bukkit.utils.DataUtils;
+import net.mcjukebox.plugin.bukkit.utils.OldDataUtils;
 import net.mcjukebox.plugin.bukkit.managers.LangManager;
 import net.mcjukebox.plugin.bukkit.utils.MessageUtils;
 import net.mcjukebox.plugin.bukkit.managers.RegionManager;
@@ -29,11 +31,21 @@ public class MCJukebox extends JavaPlugin {
     @Getter private ShowManager showManager;
     @Getter private TimeUtils timeUtils;
 
+
+    private BukkitAudiences adventure;
+
+    public @NonNull BukkitAudiences adventure() {
+        if(this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
+    }
     /**
      * Called when the plugin is first loaded by Spigot.
      */
     public void onEnable(){
         this.instance = this;
+        this.adventure = BukkitAudiences.create(this);
 
         langManager = new LangManager();
         MessageUtils.setLangManager(langManager);
@@ -62,7 +74,7 @@ public class MCJukebox extends JavaPlugin {
     }
 
     public String getAPIKey() {
-        return (String) DataUtils.loadObjectFromPath(getDataFolder() + "/api.key");
+        return (String) OldDataUtils.loadObjectFromPath(getDataFolder() + "/api.key");
     }
 
     /**
@@ -71,6 +83,10 @@ public class MCJukebox extends JavaPlugin {
     public void onDisable(){
         socketHandler.disconnect();
         regionManager.save();
+        if(this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
+        }
     }
 
 }

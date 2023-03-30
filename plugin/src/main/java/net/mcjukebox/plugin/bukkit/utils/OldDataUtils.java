@@ -2,7 +2,7 @@ package net.mcjukebox.plugin.bukkit.utils;
 
 import java.io.*;
 
-public class DataUtils {
+public class OldDataUtils {
 
     /**
      * Attempts to write an object to the provided path, creating the file if it does not already
@@ -42,5 +42,4 @@ public class DataUtils {
             return null;
         }
     }
-
 }

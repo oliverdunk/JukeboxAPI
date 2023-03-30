@@ -1,19 +1,24 @@
 package net.mcjukebox.plugin.bukkit.utils;
 
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.managers.LangManager;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.*;
 import org.bukkit.entity.Player;
 
 public class SpigotUtils {
 
 	public static void URL(Player player, LangManager langManager, String token){
 		String URL = langManager.get("user.openDomain") + "?token=" + token;
-
-		TextComponent message = new TextComponent(TextComponent.fromLegacyText(langManager.get("user.openClient")));
-		message.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, URL));
-		message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(langManager.get("user.openHover"))));
-		player.spigot().sendMessage(message);
+		TextComponent message = Component.text()
+				.append(LegacyComponentSerializer.legacy('&').deserialize(langManager.get("user.openClient")))
+				.clickEvent(ClickEvent.openUrl(URL))
+				.hoverEvent(HoverEvent.showText(LegacyComponentSerializer.legacy('&').deserialize(langManager.get("user.openClient")))).build();
+		MCJukebox.getInstance().adventure().player(player).sendMessage(message);
 	}
 
 }

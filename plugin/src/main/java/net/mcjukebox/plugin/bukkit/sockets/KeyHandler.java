@@ -2,7 +2,7 @@ package net.mcjukebox.plugin.bukkit.sockets;
 
 import lombok.Getter;
 import net.mcjukebox.plugin.bukkit.MCJukebox;
-import net.mcjukebox.plugin.bukkit.utils.DataUtils;
+import net.mcjukebox.plugin.bukkit.utils.OldDataUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -27,7 +27,7 @@ public class KeyHandler {
 
 	public void tryKey(CommandSender sender, String key) {
 		currentlyTryingKey = sender;
-		DataUtils.saveObjectToPath(key, MCJukebox.getInstance().getDataFolder() + "/api.key");
+		OldDataUtils.saveObjectToPath(key, MCJukebox.getInstance().getDataFolder() + "/api.key");
 		socketHandler.disconnect();
 		socketHandler.attemptConnection();
 	}
