@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -112,7 +113,7 @@ public class RegionListener implements Listener{
             return;
         }
 
-        Media media = new Media(ResourceType.MUSIC, utils.getURL(highestRegion));
+        Media media = new Media(ResourceType.MUSIC, utils.getURL(highestRegion), new JSONObject("{\"volume\":" + utils.getVolume(highestRegion) + "}"));
         JukeboxAPI.play(e.getPlayer(), media);
         playerInRegion.put(e.getPlayer().getUniqueId(), highestRegion);
     }

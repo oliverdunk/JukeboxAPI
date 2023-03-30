@@ -24,6 +24,7 @@ public class JukeboxCommandExecutor implements TabExecutor {
     public JukeboxCommandExecutor(RegionManager regionManager) {
         commands.put("music", new PlayCommand(ResourceType.MUSIC));
         commands.put("sound", new PlayCommand(ResourceType.SOUND_EFFECT));
+//        commands.put("volume", new VolumeCommand()); //Temp disabled till webclient supports
         commands.put("stop", new StopCommand());
         commands.put("setkey", new SetKeyCommand());
         commands.put("region", new RegionCommand(regionManager));
@@ -73,9 +74,10 @@ public class JukeboxCommandExecutor implements TabExecutor {
         sender.sendMessage(ChatColor.GREEN + "Jukebox Commands:");
         sender.sendMessage("/jukebox music <username/@show> <url> {options}");
         sender.sendMessage("/jukebox sound <username/@show> <url> {options}");
+//        sender.sendMessage(ChatColor.AQUA + "/jukebox volume <username/@show> <volume>"); //Temp disabled till client alows new methods
         sender.sendMessage("/jukebox stop <username/@show>");
         sender.sendMessage("/jukebox stop <music/all> <username/@show> {options}");
-        sender.sendMessage("/jukebox region add <id> <url/@show>");
+        sender.sendMessage("/jukebox region add <id> <url/@show> [<volume>]");
         sender.sendMessage("/jukebox region remove <id>");
         sender.sendMessage("/jukebox region list <page>");
         sender.sendMessage("/jukebox show add/remove <username> <@show>");

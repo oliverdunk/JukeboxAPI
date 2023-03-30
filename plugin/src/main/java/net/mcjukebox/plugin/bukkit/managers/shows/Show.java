@@ -30,6 +30,13 @@ public class Show {
 		members.remove(player.getUniqueId());
 		JukeboxAPI.stopAll(player, channel, -1);
 	}
+	//Enable later again!!!!!
+//	public void changeVolume(int volume) {
+//		for(UUID UUID : members.keySet()) {
+//			if(Bukkit.getPlayer(UUID) == null) continue;
+//			JukeboxAPI.changeVolume(Bukkit.getPlayer(UUID), volume, channel);
+//		}
+//	}
 
 	public void play(Media media) {
 		media.setStartTime(MCJukebox.getInstance().getTimeUtils().currentTimeMillis());

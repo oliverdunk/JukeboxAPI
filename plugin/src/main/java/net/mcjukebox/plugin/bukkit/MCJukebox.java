@@ -8,7 +8,7 @@ import net.mcjukebox.plugin.bukkit.sockets.SocketHandler;
 import net.mcjukebox.plugin.bukkit.commands.JukeboxCommandExecutor;
 import net.mcjukebox.plugin.bukkit.listeners.RegionListener;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
-import net.mcjukebox.plugin.bukkit.utils.DataUtils;
+import net.mcjukebox.plugin.bukkit.utils.OldDataUtils;
 import net.mcjukebox.plugin.bukkit.managers.LangManager;
 import net.mcjukebox.plugin.bukkit.utils.MessageUtils;
 import net.mcjukebox.plugin.bukkit.managers.RegionManager;
@@ -74,7 +74,7 @@ public class MCJukebox extends JavaPlugin {
     }
 
     public String getAPIKey() {
-        return (String) DataUtils.loadObjectFromPath(getDataFolder() + "/api.key");
+        return (String) OldDataUtils.loadObjectFromPath(getDataFolder() + "/api.key");
     }
 
     /**

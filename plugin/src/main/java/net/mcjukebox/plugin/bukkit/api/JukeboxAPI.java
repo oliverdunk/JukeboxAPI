@@ -1,5 +1,6 @@
 package net.mcjukebox.plugin.bukkit.api;
 
+import lombok.NonNull;
 import net.mcjukebox.plugin.bukkit.MCJukebox;
 import net.mcjukebox.plugin.bukkit.api.models.Media;
 import net.mcjukebox.plugin.bukkit.managers.shows.ShowManager;
@@ -32,6 +33,48 @@ public class JukeboxAPI {
             }
         });
     }
+//TODO: Wait for oliver to implement something to help with this on the web client side! [Enable and compile at your own risk, might only work with my custom client method till the near future]
+
+//    /**
+//     * Requests a change of volume for the player.
+//     *
+//     * @param player The player for which the volume should be changed
+//     * @param volume The new volume music should be at
+//     * @param channel The channel where the volume should be changed
+//     */
+//    public static void changeVolume(Player player, int volume, String channel){
+//        if(volume < 0) volume = 0;
+//        if(volume > 100) volume = 100;
+//        final JSONObject params = new JSONObject();
+//        params.put("username", player.getName());
+//        params.put("volume", volume);
+//        params.put("channel", channel);
+//        Bukkit.getScheduler().runTaskAsynchronously(MCJukebox.getInstance(), new Runnable() {
+//            public void run() {
+//                MCJukebox.getInstance().getSocketHandler().emit("command/changeVolume", params);
+//            }
+//        });
+//    }
+//
+//    /**
+//     * Requests a change of volume for the player.
+//     *
+//     * @param player The player for which the volume should be changed
+//     * @param volume The new volume music should be at
+//     */
+//    public static void changeVolume(Player player, int volume){
+//        if(volume < 0) volume = 0;
+//        if(volume > 100) volume = 100;
+//        final JSONObject params = new JSONObject();
+//        params.put("username", player.getName());
+//        params.put("volume", volume);
+//        params.put("channel", "default");
+//        Bukkit.getScheduler().runTaskAsynchronously(MCJukebox.getInstance(), new Runnable() {
+//            public void run() {
+//                MCJukebox.getInstance().getSocketHandler().emit("command/changeVolume", params);
+//            }
+//        });
+//    }
 
     /**
      * Stops the current music track.
