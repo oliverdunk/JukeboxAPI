@@ -99,6 +99,7 @@ public abstract class JukeboxCommand {
 
     private boolean isInRange(Location from, Player target, String selector) {
         if (selector.length() == 2) return true;
+        if (from.getWorld() != target.getWorld()) return false;
 
         Matcher matcher = Pattern.compile(SELECTOR_REGEX, Pattern.CASE_INSENSITIVE).matcher(selector);
         matcher.find();
