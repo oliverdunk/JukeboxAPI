@@ -10,6 +10,11 @@
         <version>2.6.8-RELEASE</version>
     </parent>
 
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
     <artifactId>mcjukebox-region-providers</artifactId>
     <packaging>pom</packaging>
     <version>2.6.8-RELEASE</version>
@@ -23,7 +28,7 @@
     <repositories>
         <repository>
             <id>sk89-repo</id>
-            <url>https://maven.sk89q.com/repo/</url>
+            <url>https://maven.enginehub.org/repo/</url>
         </repository>
     </repositories>
 
