@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.oliverdunk</groupId>
         <artifactId>mcjukebox-region-providers</artifactId>
-        <version>2.6.8-RELEASE</version>
+        <version>2.7.0-RELEASE</version>
     </parent>
 
     <artifactId>mcjukebox-region-providers-wg6</artifactId>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.oliverdunk</groupId>
             <artifactId>mcjukebox-region-providers-api</artifactId>
-            <version>2.6.8-RELEASE</version>
+            <version>2.7.0-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
